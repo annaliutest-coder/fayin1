@@ -48,13 +48,12 @@
         <header class="text-center mb-8">
             <h1 class="text-3xl font-bold text-slate-800 mb-2 font-black">🎤 華語口語表達暖身與聲音演繹</h1>
             <div class="flex flex-wrap justify-center items-center gap-4 mt-4">
-                <!-- 設定按鈕 -->
                 <button onclick="window.openSettings()" class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-200 hover:border-orange-400 transition text-xs font-bold text-slate-600">
                     <span>⚙️ API 設定</span>
                     <span id="apiStatusBadge" class="w-2 h-2 rounded-full bg-red-400"></span>
                 </button>
                 <label class="flex items-center cursor-pointer bg-white px-4 py-2 rounded-full shadow-sm border border-slate-200 hover:border-indigo-400 transition">
-                    <span class="mr-2 text-xs font-bold text-slate-500 uppercase tracking-widest">✨ 演繹指南專屬：真人高音質模式</span>
+                    <span class="mr-2 text-xs font-bold text-slate-500 uppercase tracking-widest text-[10px]">✨ 演繹指南專屬：真人高音質模式</span>
                     <div class="relative">
                         <input type="checkbox" id="ttsToggle" class="sr-only" onchange="window.togglePremiumMode()">
                         <div class="block bg-slate-200 w-10 h-6 rounded-full transition"></div>
@@ -79,11 +78,11 @@
             </div>
             <div class="flex justify-center gap-4">
                 <button onclick="window.nextWord('single')" class="bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold hover:bg-blue-200 transition active:scale-95 shadow-sm">單音節字</button>
-                <button onclick="window.nextWord('double')" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition active:scale-95">雙音節詞</button>
+                <button onclick="window.nextWord('double')" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition active:scale-95 shadow-sm">雙音節詞</button>
             </div>
         </section>
 
-        <!-- 分頁 2: 語氣百變怪 -->
+        <!-- 分頁 2: 語氣百變怪 (還原例子) -->
         <section id="emotion" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-purple-500">
             <h2 class="text-2xl font-bold text-purple-600 mb-4 font-bold uppercase tracking-widest text-center">👾 語氣百變怪</h2>
             <div class="grid md:grid-cols-2 gap-4 mb-8">
@@ -96,12 +95,12 @@
                     <div id="moodDisplay" class="text-4xl font-black text-orange-600 h-[100px] flex items-center justify-center drop-shadow-sm text-center">?</div>
                 </div>
             </div>
-            <button onclick="window.nextEmotion()" class="w-full bg-purple-600 text-white px-8 py-5 rounded-xl font-bold text-xl hover:bg-purple-700 shadow-lg transition transform active:scale-95">隨機抽取句子</button>
+            <button onclick="window.nextEmotion()" class="w-full bg-purple-600 text-white px-8 py-5 rounded-xl font-bold text-xl hover:bg-purple-700 shadow-lg transition transform active:scale-95 shadow-md">隨機抽取句子</button>
         </section>
 
         <!-- 分頁 3: 演說急轉彎 -->
         <section id="speech" class="game-card bg-white rounded-2xl p-8 shadow-xl border-t-8 border-emerald-500 text-center">
-            <h2 class="text-2xl font-bold text-emerald-600 mb-4 font-bold uppercase tracking-widest text-center text-center">🚀 演說急轉彎</h2>
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4 font-bold uppercase tracking-widest text-center">🚀 演說急轉彎</h2>
             <div id="topicDisplay" class="bg-emerald-50 p-8 rounded-xl border-2 border-emerald-200 mb-6 text-center">
                 <h3 class="text-2xl md:text-3xl font-bold text-emerald-800" id="currentTopic">點擊抽取題目</h3>
             </div>
@@ -114,14 +113,14 @@
             <div class="flex flex-col items-center gap-4 text-center">
                 <div class="text-5xl font-mono font-bold text-slate-700" id="timer">03:00</div>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="window.nextTopic()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 shadow-md transition active:scale-95">抽取題目</button>
+                    <button onclick="window.nextTopic()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 shadow-md transition active:scale-95 shadow-sm">抽取題目</button>
                     <button id="timerBtn" onclick="window.toggleTimer()" class="bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition active:scale-95 text-sm">開始計時</button>
                     <button id="sampleBtn" onclick="window.showSample()" class="hidden bg-orange-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 shadow-md transition active:scale-95 text-sm font-bold">範文建議</button>
                 </div>
             </div>
         </section>
 
-        <!-- 分頁 4: 重點音練習 (11項) -->
+        <!-- 分頁 4: 重點音練習 -->
         <section id="special" class="game-card bg-white rounded-2xl p-6 md:p-8 shadow-xl border-t-8 border-orange-500">
             <h2 class="text-2xl font-bold text-orange-600 mb-4 font-bold uppercase tracking-widest text-center">🎯 口語重點訓練清單</h2>
             <div class="flex flex-col md:flex-row gap-6">
@@ -134,33 +133,33 @@
             </div>
         </section>
 
-        <!-- 分頁 5: 聲音演繹指南 (配音核心區) -->
+        <!-- 分頁 5: 聲音演繹指南 -->
         <section id="guide" class="game-card">
             <div class="bg-slate-900 text-white p-10 rounded-t-2xl text-center relative overflow-hidden text-center">
-                <h2 class="text-3xl font-black mb-2 tracking-tight">聲音演繹與共鳴訓練實務指南</h2>
-                <p class="text-slate-400 font-bold uppercase tracking-widest text-sm">從理論到實戰，修煉真人口語感</p>
+                <h2 class="text-3xl font-black mb-2 tracking-tight underline decoration-orange-500 decoration-4 underline-offset-8">聲音演繹與共鳴訓練實務指南</h2>
+                <p class="text-slate-400 font-bold uppercase tracking-widest text-sm mt-4">從理論到實戰，修煉真人口語感</p>
                 <div id="apiLoadingOverlay" class="hidden absolute top-4 right-4 flex items-center gap-1">
                     <div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div>
                 </div>
             </div>
 
             <div class="bg-white p-6 md:p-10 space-y-20 rounded-b-2xl shadow-2xl">
-                <!-- 真人語氣修煉 -->
+                <!-- 真人語氣修煉法 -->
                 <div class="bg-gradient-to-br from-indigo-50 to-blue-50 p-8 rounded-3xl border-2 border-indigo-100 shadow-sm">
                     <h3 class="text-2xl font-black text-slate-800 mb-8 border-l-8 border-indigo-600 pl-4">✨ 真人語氣自然修煉法</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
-                        <div class="p-6 bg-white rounded-2xl border border-indigo-100 flex flex-col justify-between voice-card shadow-sm">
+                        <div class="p-6 bg-white rounded-2xl border border-indigo-100 flex flex-col justify-between voice-card shadow-sm shadow-sm">
                             <h4 class="font-black text-indigo-800 mb-3 underline decoration-indigo-200 italic">1. 對象感訓練</h4>
-                            <p class="text-xs text-slate-600 mb-6 leading-relaxed text-justify">說話時想像正對著某個人。對象變了，聲音就會自然帶有溫度。</p>
+                            <p class="text-sm text-slate-600 mb-6 leading-relaxed text-justify">說話時想像正對著某個人。對象變了，聲音就會自然帶有溫度。</p>
                             <button onclick="window.speak('聽我說，這件事真的不是你想的那樣。', '溫柔、耐心、對老友解釋的語氣')" class="bg-indigo-600 text-white py-3 rounded-xl font-bold active:scale-95 shadow-md">🔊 聽示範：對象感</button>
                         </div>
-                        <div class="p-6 bg-white rounded-2xl border border-indigo-100 flex flex-col justify-between voice-card shadow-sm">
-                            <h4 class="font-black text-indigo-800 mb-3 underline decoration-indigo-200 italic text-center md:text-left">2. 邏輯重音位移</h4>
-                            <p class="text-xs text-slate-600 mb-4 leading-relaxed text-justify">台詞：「你說你因為愛上了他......」</p>
+                        <div class="p-6 bg-white rounded-2xl border border-indigo-100 flex flex-col justify-between voice-card shadow-sm shadow-sm">
+                            <h4 class="font-black text-indigo-800 mb-3 underline decoration-indigo-200 italic text-center md:text-left text-center md:text-left">2. 邏輯重音位移</h4>
+                            <p class="text-sm text-slate-600 mb-4 leading-relaxed text-justify text-justify">台詞：「你說你因為愛上了他......」</p>
                             <div class="flex flex-col gap-2">
-                                <button onclick="window.speak('你說你因為愛上了他', '強調「你」')" class="text-[10px] bg-slate-100 px-2 py-1 rounded hover:bg-slate-200 transition">強調：你</button>
-                                <button onclick="window.speak('你說你因為愛上了他', '強調「愛上了」')" class="text-[10px] bg-slate-100 px-2 py-1 rounded hover:bg-slate-200 transition">強調：愛上了</button>
-                                <button onclick="window.speak('你說你因為愛上了他', '強調「他」')" class="text-[10px] bg-slate-100 px-2 py-1 rounded hover:bg-slate-200 transition">強調：他</button>
+                                <button onclick="window.speak('你說你因為愛上了他', '強調「你」')" class="text-xs py-2 bg-slate-100 rounded-lg font-bold hover:bg-slate-200 transition">強調：你</button>
+                                <button onclick="window.speak('你說你因為愛上了他', '強調「愛上了」')" class="text-xs py-2 bg-slate-100 rounded-lg font-bold hover:bg-slate-200 transition">強調：愛上了</button>
+                                <button onclick="window.speak('你說你因為愛上了他', '強調「他」')" class="text-xs py-2 bg-slate-100 rounded-lg font-bold hover:bg-slate-200 transition">強調：他</button>
                             </div>
                         </div>
                     </div>
@@ -200,7 +199,7 @@
                     </div>
                 </div>
 
-                <!-- 核心要素詳解 (補齊語調與停頓) -->
+                <!-- 四大要素詳解 -->
                 <div>
                     <h3 class="text-2xl font-bold text-slate-800 mb-8 border-l-8 border-orange-600 pl-4 text-orange-600 font-black">
                         🎭 聲音核心演繹專項訓練
@@ -212,14 +211,14 @@
                             <div class="space-y-4 text-slate-700 flex-grow">
                                 <div class="bg-blue-50 p-3 rounded-xl">
                                     <p class="font-bold text-blue-800 underline mb-1">操作步驟：</p>
-                                    <ol class="list-decimal list-inside space-y-0.5">
+                                    <ol class="list-decimal list-inside space-y-0.5 text-xs">
                                         <li>生理定位：決定角色重心。</li>
                                         <li>共鳴鎖定：選定腔室。</li>
                                     </ol>
                                 </div>
-                                <div class="space-y-1.5">
+                                <div class="space-y-1.5 text-xs">
                                     <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-blue-100">
-                                        <p class="text-xs">👶 小孩「奶奶我想吃那個......」</p>
+                                        <p>👶 小孩「奶奶我想吃那個......」</p>
                                         <button onclick="window.speak('奶奶我想吃那個', '幼童撒嬌語氣')" class="text-blue-600 font-bold">🔊</button>
                                     </div>
                                     <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-blue-100">
@@ -236,15 +235,15 @@
                         <!-- 情感 -->
                         <div class="bg-white p-6 rounded-3xl border-2 border-red-50 shadow-lg voice-card flex flex-col">
                             <h4 class="font-black text-red-900 text-base mb-4 flex items-center">❤️ 情感：同一台詞多情緒</h4>
-                            <div class="space-y-4 text-slate-700 flex-grow">
+                            <div class="space-y-4 text-slate-700 flex-grow text-xs">
                                 <div class="bg-red-50 p-3 rounded-xl">
                                     <p class="font-bold text-red-800 underline mb-1">步驟指南：</p>
-                                    <ol class="list-decimal list-inside space-y-0.5">
+                                    <ol class="list-decimal list-inside space-y-0.5 text-xs">
                                         <li>氣息同步：決定呼吸頻率。</li>
                                         <li>情感上色：決定音準起伏。</li>
                                     </ol>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2 text-[9px]">
+                                <div class="grid grid-cols-2 gap-2 text-[11px]">
                                     <div class="flex justify-between items-center p-2 bg-white rounded border border-red-100 shadow-sm">
                                         <span>🌟 喜 「真的嗎？」</span>
                                         <button onclick="window.speak('真的嗎', '非常喜悅驚喜')" class="text-red-500 font-bold">🔊</button>
@@ -264,57 +263,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- 語調 (Intonation) - 恢復內容 -->
-                        <div class="bg-white p-6 rounded-3xl border-2 border-emerald-50 shadow-lg voice-card flex flex-col">
-                            <h4 class="font-black text-emerald-900 text-base mb-4 flex items-center">📈 語調：句子的旋律走向</h4>
-                            <div class="space-y-4 text-slate-700 flex-grow">
-                                <div class="bg-emerald-50 p-3 rounded-xl text-[11px]">
-                                    <p class="font-bold text-emerald-800 underline mb-1">核心重點：</p>
-                                    <p>專注句子的旋律線條，特別是末字的「揚、降、平」對語意產生的微妙變化。</p>
-                                </div>
-                                <div class="space-y-2">
-                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-emerald-100">
-                                        <p class="text-xs">⤴️ <b>揚調：</b>「你要走了？」(詢問/不解)</p>
-                                        <button onclick="window.speak('你要走了？', '語尾大幅上揚、充滿強烈不解感')" class="text-emerald-600 font-bold">🔊</button>
-                                    </div>
-                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-emerald-100">
-                                        <p class="text-xs">⤵️ <b>降調：</b>「你要走了。」(命令/肯定)</p>
-                                        <button onclick="window.speak('你要走了。', '語尾沉穩下降、帶著命令與肯定')" class="text-emerald-600 font-bold">🔊</button>
-                                    </div>
-                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-emerald-100">
-                                        <p class="text-xs">〰️ <b>平調：</b>「你要走了......」(冷漠/敘述)</p>
-                                        <button onclick="window.speak('你要走了', '語速放慢、語調平直無起伏、充滿冷漠感')" class="text-emerald-600 font-bold">🔊</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 停頓 (Pause) - 恢復內容 -->
-                        <div class="bg-white p-6 rounded-3xl border-2 border-purple-50 shadow-lg voice-card flex flex-col">
-                            <h4 class="font-black text-purple-900 text-base mb-4 flex items-center">⏳ 停頓：呼吸間的留白</h4>
-                            <div class="space-y-4 text-slate-700 flex-grow">
-                                <div class="bg-purple-50 p-3 rounded-xl text-[11px]">
-                                    <p class="font-bold text-purple-800 underline mb-1">核心重點：</p>
-                                    <p>練習「語法停頓」與「心理停頓」。體會「此時無聲勝有聲」產生的期待感與氣場。</p>
-                                </div>
-                                <div class="space-y-2">
-                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-purple-100">
-                                        <p class="text-xs">📚 <b>語法：</b>「他 是個 非常 優秀的 歌手。」</p>
-                                        <button onclick="window.speak('他是個...非常優秀的...歌手', '結構清晰、在修飾語前做極短暫停頓的語氣')" class="text-purple-600 font-bold">🔊</button>
-                                    </div>
-                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-purple-100">
-                                        <p class="text-xs">🧠 <b>心理：</b>「最後的冠軍是......王小明！」</p>
-                                        <button onclick="window.speak('最後的冠軍是......王小明', '充滿懸疑感、在省略號處刻意停頓兩秒、最後爆發名字')" class="text-purple-600 font-bold">🔊</button>
-                                    </div>
-                                    <p class="text-[9px] text-purple-400 font-bold italic text-center">※ 停留時間至少 2 秒，製造強烈的心理懸念。</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="text-center bg-slate-50 p-10 rounded-2xl border-2 border-dashed border-slate-200">
                     <p class="text-2xl font-medium italic text-slate-600">「別只背食譜，進廚房動手做吧！」</p>
-                    <p class="text-xs text-slate-400 mt-4 italic">— 聲音即人格，語氣即風景 —</p>
+                    <p class="text-sm text-slate-400 mt-4 italic text-sm">— 聲音即人格，語氣即風景 —</p>
                 </div>
             </div>
         </section>
@@ -323,21 +277,21 @@
         <div id="settingsModal" class="modal p-4" onclick="if(event.target==this) window.closeSettings()">
             <div class="bg-white rounded-2xl max-w-sm w-full p-8 shadow-2xl text-center">
                 <h3 class="text-xl font-black text-slate-800 mb-2">Gemini API 設定</h3>
-                <p class="text-xs text-slate-400 mb-6 italic leading-relaxed">請輸入您的 API Key 以啟用真人高音質配音模式。此金鑰僅存於您的瀏覽器中。</p>
+                <p class="text-xs text-slate-400 mb-6 italic leading-relaxed text-xs text-xs">請輸入您的 API Key 以啟用真人高音質配音模式。此金鑰僅存於您的瀏覽器中。</p>
                 <input type="password" id="apiInput" placeholder="在此貼上您的 API Key" class="w-full px-4 py-3 rounded-xl border-2 border-slate-100 focus:border-indigo-400 outline-none transition mb-4 text-center font-mono">
                 <div class="flex gap-2">
-                    <button onclick="window.saveApiKey()" class="flex-1 bg-indigo-600 text-white py-3 rounded-xl font-bold active:scale-95 transition">儲存金鑰</button>
+                    <button onclick="window.saveApiKey()" class="flex-1 bg-indigo-600 text-white py-3 rounded-xl font-bold active:scale-95 transition shadow-sm shadow-sm">儲存金鑰</button>
                     <button onclick="window.closeSettings()" class="bg-slate-100 text-slate-400 px-4 rounded-xl hover:bg-slate-200">取消</button>
                 </div>
-                <p class="text-[9px] text-slate-400 mt-4 underline"><a href="https://aistudio.google.com/app/apikey" target="_blank">點此獲取免費 API Key</a></p>
+                <p class="text-[9px] text-slate-400 mt-4 underline"><a href="https://aistudio.google.com/app/apikey" target="_blank">點此獲獲取免費 API Key</a></p>
             </div>
         </div>
 
         <!-- 範文 Modal -->
         <div id="sampleModal" class="modal p-4" onclick="if(event.target==this) window.closeSample()">
-            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl text-sm italic italic leading-relaxed text-justify">
+            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl text-sm italic italic leading-relaxed text-justify text-justify text-justify">
                 <button onclick="window.closeSample()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-500 text-2xl font-bold">✕</button>
-                <div id="modalContent" class="text-slate-700 space-y-4"></div>
+                <div id="modalContent" class="text-base text-slate-700 space-y-4"></div>
             </div>
         </div>
 
@@ -359,7 +313,7 @@
             { title: "6. 真誠 (zhēnchéng)", pinyin: "zhēnchéng", focus: "前鼻音 → 後鼻音", examples: ["深層 (shēncéng)", "戰場 (zhànchǎng)", "真正 (zhēnzhèng)"], tips: "前鼻音 n 要乾脆，後鼻音 ng 空間感要大。" },
             { title: "7. 老伴兒 (lǎobànr)", pinyin: "lǎobànr", focus: "兒化韻", examples: ["一點兒 (yìdiǎnr)", "心眼兒 (xīnyǎnr)"], tips: "尾音 n 脫落並鼻化，捲舌需流暢。" },
             { title: "8. 容忍 (róngrěn)", pinyin: "róngrěn", focus: "r- 連續發音", examples: ["仍然 (réngrán)", "柔弱 (róuruò)"], tips: "連續翹舌音需保持肌肉張力。" },
-            { title: "9. 去啊 (qùwa)", pinyin: "qùwa", focus: "語氣詞連音", examples: ["苦啊 (kǔwa)", "哭啊 (kūwa)"], tips: "受前字 u 影響，「啊」帶有 wa 音值。" },
+            { title: "9. 走啊 (qù a)", pinyin: "qù a", focus: "連音變化 (wa)", examples: ["走啊 (zǒu a)", "好啊 (hǎo a)"], tips: "受前字 u 影響，「啊」與前連音變成 wa" },
             { title: "10. 石頭 (shítou)", pinyin: "shítou", focus: "輕聲詞綴", examples: ["舌頭 (shétou)", "枕頭 (zhěntou)"], tips: "輕聲短促，共鳴集中在口腔前部。" },
             { title: "11. 搭棚 (dāpéng)", pinyin: "dāpéng", focus: "-eng 發音", examples: ["搭棚 (dāpéng)", "豐富 (fēngfù)"], tips: "重點在於 peng、feng 的 [e] 要清晰，嚴禁發成 [o]。" }
         ];
@@ -367,7 +321,16 @@
         const data = {
             single: ['兒', '疊', '瘦', '彩', '辣', '虐', '撇', '揣', '挪', '瞅', '惹', '儒', '晉', '鷹', '庫', '植', '猴', '燙', '祖', '曼', '捉', '洋', '豐', '果', '遠', '僧', '儒'],
             topics: [{ id: "2024", text: "題目：我最喜歡的一部劇 (2024)" },{ id: "2025", text: "題目：難忘的旅行 (2025)" },{ id: "2023", text: "題目：我最敬佩的一個人 (2023)" }],
-            topicDetails: { "2024": "今天我要分享的是《請回答1988》。這部劇細膩刻劃了五個家庭之間的情誼......", "2025": "兩年前我獨自前往台灣東部的花蓮之旅，聽著浪花拍打鵝卵石的聲響......", "2023": "我最敬佩的是我的中學老師。他不僅是知識的傳遞者，更是心靈的引路人......" }
+            topicDetails: { "2024": "今天我要分享的是《請回答1988》。這部劇細膩刻劃了五個家庭之間的情誼......教會我珍惜與親友相處的時光。", "2025": "兩年前我獨自前往台灣東部的花蓮之旅，聽著浪花拍打鵝卵石的聲響，我感受到前所未有的平靜。這次旅行教會我獨立的價值......", "2023": "今天我想介紹我最敬佩的一個人，那就是我的中學老師。他不僅是知識的傳遞者，更是心靈的引路人，教會我「失敗並不可怕，可怕的是失去嘗試的勇氣」......" },
+            sentences: [
+                { text: "身體健康平安，就是人生最大的幸福。", mood: "🥰 溫暖知足" },
+                { text: "奮起湖除了鐵路便當之外，野生愛玉是最有名的招牌冰品了。", mood: "🤩 熱情介紹" },
+                { text: "我終於明白，每一條路徑都有它不得不這樣跋涉的理由。", mood: "🧘 深沉感悟" },
+                { text: "消防隊員奮不顧身地衝進火場裡救人，令人敬佩。", mood: "🫡 充滿敬意" },
+                { text: "你說你因為愛上了他......真的嗎？", mood: "⚡ 驚喜/不解" },
+                { text: "杜鵑花爭奇鬥艷，正是春意盎然的最佳寫照吧！", mood: "🤩 驚喜讚嘆" },
+                { text: "聽你一席話，有如暮鼓晨鐘般，使我大徹大悟。", mood: "🥰 誠摯感激" }
+            ]
         };
 
         const pools = { single: [], double: [], sentences: [], topics: [] };
@@ -472,12 +435,14 @@
             if (pools.single.length === 0) pools.single = [...data.single].sort(() => Math.random() - 0.5);
             const word = pools.single.pop();
             document.getElementById('currentWordSpan').innerText = word;
-            document.getElementById('currentWordSpan').className = "text-8xl font-black text-blue-800";
+            document.getElementById('currentWordSpan').className = "text-8xl font-black text-blue-800 text-center";
         };
 
         window.nextEmotion = () => {
-            document.getElementById('sentenceDisplay').innerText = "你說你因為愛上了他......真的嗎？";
-            document.getElementById('moodDisplay').innerText = "⚡ 驚喜/不解";
+            if (pools.sentences.length === 0) pools.sentences = [...data.sentences].sort(() => Math.random() - 0.5);
+            const s = pools.sentences.pop();
+            document.getElementById('sentenceDisplay').innerText = s.text;
+            document.getElementById('moodDisplay').innerText = s.mood;
         };
 
         window.nextTopic = () => {
@@ -506,13 +471,13 @@
             document.querySelectorAll('.special-list-btn').forEach((b, i) => i === idx ? b.classList.add('active') : b.classList.remove('active'));
             const c = document.getElementById('specialContent');
             if(!c) return;
-            const ex = item.examples.map(e => `<span class="bg-white px-4 py-2 rounded-lg shadow-sm border border-orange-200 text-orange-700 font-bold text-xs">📄 ${e}</span>`).join('');
+            const ex = item.examples.map(e => `<span class="bg-white px-5 py-3 rounded-lg shadow-sm border border-orange-200 text-orange-700 font-bold text-lg md:text-xl">📄 ${e}</span>`).join('');
             c.innerHTML = `
-                <div class="text-7xl font-black text-orange-600 mb-4">${item.pinyin}</div>
-                <div class="px-6 py-2 bg-orange-500 text-white rounded-full font-bold mb-6 text-sm mx-auto w-fit">${item.focus}</div>
-                <div class="bg-white p-6 rounded-2xl border-l-8 border-orange-400 shadow-sm text-left mx-auto max-w-md">
-                    <p class="text-slate-600 italic text-sm mb-4 leading-relaxed text-justify">${item.tips}</p>
-                    <div class="flex flex-wrap gap-2 justify-center">${ex}</div>
+                <div class="text-7xl md:text-8xl font-black text-orange-600 mb-4">${item.pinyin}</div>
+                <div class="px-6 py-2 bg-orange-500 text-white rounded-full font-bold mb-6 text-sm mx-auto w-fit text-center">${item.focus}</div>
+                <div class="bg-white p-8 rounded-2xl border-l-8 border-orange-400 shadow-sm text-left mx-auto max-w-md w-full">
+                    <p class="text-xl text-slate-700 italic mb-8 leading-relaxed text-justify">${item.tips}</p>
+                    <div class="flex flex-wrap gap-4 justify-center">${ex}</div>
                 </div>`;
         };
 
