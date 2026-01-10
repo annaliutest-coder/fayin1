@@ -54,7 +54,7 @@
                     <span id="apiStatusBadge" class="w-2 h-2 rounded-full bg-red-400"></span>
                 </button>
                 <label class="flex items-center cursor-pointer bg-white px-4 py-2 rounded-full shadow-sm border border-slate-200 hover:border-indigo-400 transition">
-                    <span class="mr-2 text-xs font-bold text-slate-500 uppercase tracking-widest">✨ 真人高音質模式</span>
+                    <span class="mr-2 text-xs font-bold text-slate-500 uppercase tracking-widest">✨ 演繹指南專屬：真人高音質模式</span>
                     <div class="relative">
                         <input type="checkbox" id="ttsToggle" class="sr-only" onchange="window.togglePremiumMode()">
                         <div class="block bg-slate-200 w-10 h-6 rounded-full transition"></div>
@@ -71,10 +71,10 @@
             </nav>
         </header>
 
-        <!-- 分頁 1-4 核心功能 -->
+        <!-- 分頁 1: 發音快閃店 -->
         <section id="pronounce" class="game-card active bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-blue-500">
             <h2 class="text-2xl font-bold text-blue-600 mb-4 font-bold uppercase tracking-widest text-center">🏠 發音快閃店</h2>
-            <div id="wordDisplay" class="random-box bg-blue-50 border-4 border-dashed border-blue-200 rounded-xl mb-8 p-10 overflow-hidden relative">
+            <div id="wordDisplay" class="random-box bg-blue-50 border-4 border-dashed border-blue-200 rounded-xl mb-8 p-10 overflow-hidden relative text-center">
                 <span id="currentWordSpan" class="text-4xl font-bold text-blue-300">點擊按鈕開始挑戰</span>
             </div>
             <div class="flex justify-center gap-4">
@@ -83,8 +83,9 @@
             </div>
         </section>
 
-        <section id="emotion" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-purple-500 text-center">
-            <h2 class="text-2xl font-bold text-purple-600 mb-4 font-bold uppercase tracking-widest">👾 語氣百變怪</h2>
+        <!-- 分頁 2: 語氣百變怪 -->
+        <section id="emotion" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-purple-500">
+            <h2 class="text-2xl font-bold text-purple-600 mb-4 font-bold uppercase tracking-widest text-center">👾 語氣百變怪</h2>
             <div class="grid md:grid-cols-2 gap-4 mb-8">
                 <div class="p-6 bg-purple-50 rounded-xl border-2 border-purple-200 shadow-inner">
                     <span class="block text-sm text-purple-500 uppercase tracking-widest mb-4 font-bold border-b border-purple-200 pb-2">📜 試題句子</span>
@@ -98,8 +99,9 @@
             <button onclick="window.nextEmotion()" class="w-full bg-purple-600 text-white px-8 py-5 rounded-xl font-bold text-xl hover:bg-purple-700 shadow-lg transition transform active:scale-95">隨機抽取句子</button>
         </section>
 
+        <!-- 分頁 3: 演說急轉彎 -->
         <section id="speech" class="game-card bg-white rounded-2xl p-8 shadow-xl border-t-8 border-emerald-500 text-center">
-            <h2 class="text-2xl font-bold text-emerald-600 mb-4 font-bold uppercase tracking-widest">🚀 演說急轉彎</h2>
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4 font-bold uppercase tracking-widest text-center text-center">🚀 演說急轉彎</h2>
             <div id="topicDisplay" class="bg-emerald-50 p-8 rounded-xl border-2 border-emerald-200 mb-6 text-center">
                 <h3 class="text-2xl md:text-3xl font-bold text-emerald-800" id="currentTopic">點擊抽取題目</h3>
             </div>
@@ -114,11 +116,12 @@
                 <div class="flex flex-wrap justify-center gap-4">
                     <button onclick="window.nextTopic()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 shadow-md transition active:scale-95">抽取題目</button>
                     <button id="timerBtn" onclick="window.toggleTimer()" class="bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition active:scale-95 text-sm">開始計時</button>
-                    <button id="sampleBtn" onclick="window.showSample()" class="hidden bg-orange-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 shadow-md transition active:scale-95 text-sm">範文建議</button>
+                    <button id="sampleBtn" onclick="window.showSample()" class="hidden bg-orange-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 shadow-md transition active:scale-95 text-sm font-bold">範文建議</button>
                 </div>
             </div>
         </section>
 
+        <!-- 分頁 4: 重點音練習 (11項) -->
         <section id="special" class="game-card bg-white rounded-2xl p-6 md:p-8 shadow-xl border-t-8 border-orange-500">
             <h2 class="text-2xl font-bold text-orange-600 mb-4 font-bold uppercase tracking-widest text-center">🎯 口語重點訓練清單</h2>
             <div class="flex flex-col md:flex-row gap-6">
@@ -146,14 +149,14 @@
                 <div class="bg-gradient-to-br from-indigo-50 to-blue-50 p-8 rounded-3xl border-2 border-indigo-100 shadow-sm">
                     <h3 class="text-2xl font-black text-slate-800 mb-8 border-l-8 border-indigo-600 pl-4">✨ 真人語氣自然修煉法</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
-                        <div class="p-6 bg-white rounded-2xl border border-indigo-100 flex flex-col justify-between voice-card">
+                        <div class="p-6 bg-white rounded-2xl border border-indigo-100 flex flex-col justify-between voice-card shadow-sm">
                             <h4 class="font-black text-indigo-800 mb-3 underline decoration-indigo-200 italic">1. 對象感訓練</h4>
-                            <p class="text-xs text-slate-600 mb-6 leading-relaxed">說話時想像正對著某個人。對象變了，聲音就會自然帶有溫度。</p>
+                            <p class="text-xs text-slate-600 mb-6 leading-relaxed text-justify">說話時想像正對著某個人。對象變了，聲音就會自然帶有溫度。</p>
                             <button onclick="window.speak('聽我說，這件事真的不是你想的那樣。', '溫柔、耐心、對老友解釋的語氣')" class="bg-indigo-600 text-white py-3 rounded-xl font-bold active:scale-95 shadow-md">🔊 聽示範：對象感</button>
                         </div>
-                        <div class="p-6 bg-white rounded-2xl border border-indigo-100 flex flex-col justify-between voice-card">
-                            <h4 class="font-black text-indigo-800 mb-3 underline decoration-indigo-200 italic">2. 邏輯重音位移</h4>
-                            <p class="text-xs text-slate-600 mb-4 leading-relaxed">台詞：「你說你因為愛上了他......」</p>
+                        <div class="p-6 bg-white rounded-2xl border border-indigo-100 flex flex-col justify-between voice-card shadow-sm">
+                            <h4 class="font-black text-indigo-800 mb-3 underline decoration-indigo-200 italic text-center md:text-left">2. 邏輯重音位移</h4>
+                            <p class="text-xs text-slate-600 mb-4 leading-relaxed text-justify">台詞：「你說你因為愛上了他......」</p>
                             <div class="flex flex-col gap-2">
                                 <button onclick="window.speak('你說你因為愛上了他', '強調「你」')" class="text-[10px] bg-slate-100 px-2 py-1 rounded hover:bg-slate-200 transition">強調：你</button>
                                 <button onclick="window.speak('你說你因為愛上了他', '強調「愛上了」')" class="text-[10px] bg-slate-100 px-2 py-1 rounded hover:bg-slate-200 transition">強調：愛上了</button>
@@ -197,33 +200,33 @@
                     </div>
                 </div>
 
-                <!-- 核心要素詳解 -->
+                <!-- 核心要素詳解 (補齊語調與停頓) -->
                 <div>
                     <h3 class="text-2xl font-bold text-slate-800 mb-8 border-l-8 border-orange-600 pl-4 text-orange-600 font-black">
                         🎭 聲音核心演繹專項訓練
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-[11px]">
                         <!-- 音色 -->
-                        <div class="bg-white p-6 rounded-3xl border-2 border-blue-50 shadow-lg voice-card">
+                        <div class="bg-white p-6 rounded-3xl border-2 border-blue-50 shadow-lg voice-card flex flex-col">
                             <h4 class="font-black text-blue-900 text-base mb-4 flex items-center">🌈 音色：變換角色共鳴</h4>
-                            <div class="space-y-4 text-slate-700">
+                            <div class="space-y-4 text-slate-700 flex-grow">
                                 <div class="bg-blue-50 p-3 rounded-xl">
-                                    <p class="font-bold text-blue-800 underline mb-1">步驟指南：</p>
+                                    <p class="font-bold text-blue-800 underline mb-1">操作步驟：</p>
                                     <ol class="list-decimal list-inside space-y-0.5">
                                         <li>生理定位：決定角色重心。</li>
                                         <li>共鳴鎖定：選定腔室。</li>
                                     </ol>
                                 </div>
                                 <div class="space-y-1.5">
-                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded">
-                                        <p>👶 小孩「奶奶我想吃那個......」</p>
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-blue-100">
+                                        <p class="text-xs">👶 小孩「奶奶我想吃那個......」</p>
                                         <button onclick="window.speak('奶奶我想吃那個', '幼童撒嬌語氣')" class="text-blue-600 font-bold">🔊</button>
                                     </div>
-                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded">
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-blue-100">
                                         <p>👵 老人「時光過得真快啊......」</p>
                                         <button onclick="window.speak('時光過得真快啊', '年邁滄桑語氣')" class="text-blue-600 font-bold">🔊</button>
                                     </div>
-                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded">
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-blue-100">
                                         <p>👹 巨人「是誰在我的領地？」</p>
                                         <button onclick="window.speak('是誰在我的領地', '低沈威嚴巨人語氣')" class="text-blue-600 font-bold">🔊</button>
                                     </div>
@@ -231,9 +234,9 @@
                             </div>
                         </div>
                         <!-- 情感 -->
-                        <div class="bg-white p-6 rounded-3xl border-2 border-red-50 shadow-lg voice-card">
+                        <div class="bg-white p-6 rounded-3xl border-2 border-red-50 shadow-lg voice-card flex flex-col">
                             <h4 class="font-black text-red-900 text-base mb-4 flex items-center">❤️ 情感：同一台詞多情緒</h4>
-                            <div class="space-y-4 text-slate-700">
+                            <div class="space-y-4 text-slate-700 flex-grow">
                                 <div class="bg-red-50 p-3 rounded-xl">
                                     <p class="font-bold text-red-800 underline mb-1">步驟指南：</p>
                                     <ol class="list-decimal list-inside space-y-0.5">
@@ -258,6 +261,51 @@
                                         <span>⚡ 驚 「真的嗎？」</span>
                                         <button onclick="window.speak('真的嗎', '極度驚訝恐懼')" class="text-red-500 font-bold">🔊</button>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 語調 (Intonation) - 恢復內容 -->
+                        <div class="bg-white p-6 rounded-3xl border-2 border-emerald-50 shadow-lg voice-card flex flex-col">
+                            <h4 class="font-black text-emerald-900 text-base mb-4 flex items-center">📈 語調：句子的旋律走向</h4>
+                            <div class="space-y-4 text-slate-700 flex-grow">
+                                <div class="bg-emerald-50 p-3 rounded-xl text-[11px]">
+                                    <p class="font-bold text-emerald-800 underline mb-1">核心重點：</p>
+                                    <p>專注句子的旋律線條，特別是末字的「揚、降、平」對語意產生的微妙變化。</p>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-emerald-100">
+                                        <p class="text-xs">⤴️ <b>揚調：</b>「你要走了？」(詢問/不解)</p>
+                                        <button onclick="window.speak('你要走了？', '語尾大幅上揚、充滿強烈不解感')" class="text-emerald-600 font-bold">🔊</button>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-emerald-100">
+                                        <p class="text-xs">⤵️ <b>降調：</b>「你要走了。」(命令/肯定)</p>
+                                        <button onclick="window.speak('你要走了。', '語尾沉穩下降、帶著命令與肯定')" class="text-emerald-600 font-bold">🔊</button>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-emerald-100">
+                                        <p class="text-xs">〰️ <b>平調：</b>「你要走了......」(冷漠/敘述)</p>
+                                        <button onclick="window.speak('你要走了', '語速放慢、語調平直無起伏、充滿冷漠感')" class="text-emerald-600 font-bold">🔊</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 停頓 (Pause) - 恢復內容 -->
+                        <div class="bg-white p-6 rounded-3xl border-2 border-purple-50 shadow-lg voice-card flex flex-col">
+                            <h4 class="font-black text-purple-900 text-base mb-4 flex items-center">⏳ 停頓：呼吸間的留白</h4>
+                            <div class="space-y-4 text-slate-700 flex-grow">
+                                <div class="bg-purple-50 p-3 rounded-xl text-[11px]">
+                                    <p class="font-bold text-purple-800 underline mb-1">核心重點：</p>
+                                    <p>練習「語法停頓」與「心理停頓」。體會「此時無聲勝有聲」產生的期待感與氣場。</p>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-purple-100">
+                                        <p class="text-xs">📚 <b>語法：</b>「他 是個 非常 優秀的 歌手。」</p>
+                                        <button onclick="window.speak('他是個...非常優秀的...歌手', '結構清晰、在修飾語前做極短暫停頓的語氣')" class="text-purple-600 font-bold">🔊</button>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded border border-purple-100">
+                                        <p class="text-xs">🧠 <b>心理：</b>「最後的冠軍是......王小明！」</p>
+                                        <button onclick="window.speak('最後的冠軍是......王小明', '充滿懸疑感、在省略號處刻意停頓兩秒、最後爆發名字')" class="text-purple-600 font-bold">🔊</button>
+                                    </div>
+                                    <p class="text-[9px] text-purple-400 font-bold italic text-center">※ 停留時間至少 2 秒，製造強烈的心理懸念。</p>
                                 </div>
                             </div>
                         </div>
@@ -287,7 +335,7 @@
 
         <!-- 範文 Modal -->
         <div id="sampleModal" class="modal p-4" onclick="if(event.target==this) window.closeSample()">
-            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl text-sm italic italic leading-relaxed">
+            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl text-sm italic italic leading-relaxed text-justify">
                 <button onclick="window.closeSample()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-500 text-2xl font-bold">✕</button>
                 <div id="modalContent" class="text-slate-700 space-y-4"></div>
             </div>
@@ -339,8 +387,10 @@
         };
         window.updateApiBadge = (ready) => {
             const b = document.getElementById('apiStatusBadge');
-            b.classList.remove('bg-red-400', 'bg-green-400');
-            b.classList.add(ready ? 'bg-green-400' : 'bg-red-400');
+            if(b) {
+                b.classList.remove('bg-red-400', 'bg-green-400');
+                b.classList.add(ready ? 'bg-green-400' : 'bg-red-400');
+            }
         };
 
         // TTS 核心
@@ -440,6 +490,8 @@
 
         function initSpecialList() {
             const c = document.getElementById('specialList');
+            if(!c) return;
+            c.innerHTML = "";
             specialData.forEach((item, i) => {
                 const b = document.createElement('button');
                 b.className = "special-list-btn w-full px-4 py-3 rounded-xl font-bold border-2 border-orange-100 hover:bg-orange-100 transition truncate text-xs";
@@ -452,12 +504,14 @@
         window.loadSpecialDetail = (idx) => {
             const item = specialData[idx];
             document.querySelectorAll('.special-list-btn').forEach((b, i) => i === idx ? b.classList.add('active') : b.classList.remove('active'));
+            const c = document.getElementById('specialContent');
+            if(!c) return;
             const ex = item.examples.map(e => `<span class="bg-white px-4 py-2 rounded-lg shadow-sm border border-orange-200 text-orange-700 font-bold text-xs">📄 ${e}</span>`).join('');
-            document.getElementById('specialContent').innerHTML = `
+            c.innerHTML = `
                 <div class="text-7xl font-black text-orange-600 mb-4">${item.pinyin}</div>
                 <div class="px-6 py-2 bg-orange-500 text-white rounded-full font-bold mb-6 text-sm mx-auto w-fit">${item.focus}</div>
                 <div class="bg-white p-6 rounded-2xl border-l-8 border-orange-400 shadow-sm text-left mx-auto max-w-md">
-                    <p class="text-slate-600 italic text-sm mb-4 leading-relaxed">${item.tips}</p>
+                    <p class="text-slate-600 italic text-sm mb-4 leading-relaxed text-justify">${item.tips}</p>
                     <div class="flex flex-wrap gap-2 justify-center">${ex}</div>
                 </div>`;
         };
