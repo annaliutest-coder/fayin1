@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>華語口語表達：2024-2025 認證試題暖身</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .game-card {
+            display: none;
+        }
+        .game-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .random-box {
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 text-slate-800">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- 標題與導航 -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">🎤 華語口語認證試題暖身</h1>
+            <p class="text-slate-600">教育部 2024 & 2025 完整口語試題庫</p>
+            <nav class="flex flex-wrap justify-center gap-2 mt-6">
+                <button onclick="showGame('pronounce')" class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition shadow-md">1. 發音快閃店</button>
+                <button onclick="showGame('emotion')" class="px-4 py-2 bg-purple-500 text-white rounded-full hover:bg-purple-600 transition shadow-md">2. 語氣百變怪</button>
+                <button onclick="showGame('speech')" class="px-4 py-2 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 transition shadow-md">3. 演說急轉彎</button>
+            </nav>
+        </header>
+
+        <!-- 遊戲區 1: 發音快閃店 -->
+        <section id="pronounce" class="game-card active bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-blue-500">
+            <h2 class="text-2xl font-bold text-blue-600 mb-4">🏠 1. 發音快閃店</h2>
+            <p class="text-slate-500 mb-6">挑戰認證考試中的單音節與雙音節難詞。</p>
+            <div id="wordDisplay" class="random-box bg-blue-50 border-4 border-dashed border-blue-200 rounded-xl mb-8 p-10">
+                <span class="text-6xl font-black text-blue-800">準備挑戰</span>
+            </div>
+            <div class="flex justify-center gap-4">
+                <button onclick="nextWord('single')" class="bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold hover:bg-blue-200 transition">單音節字挑戰</button>
+                <button onclick="nextWord('double')" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition">雙音節詞挑戰</button>
+            </div>
+        </section>
+
+        <!-- 遊戲區 2: 語氣百變怪 -->
+        <section id="emotion" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-purple-500">
+            <h2 class="text-2xl font-bold text-purple-600 mb-4">👾 2. 語氣百變怪</h2>
+            <p class="text-slate-500 mb-6">隨機抽取句子，根據句意配對適當的語氣練習，告別機械朗讀。</p>
+            <div class="grid md:grid-cols-2 gap-4 mb-8">
+                <div class="p-6 bg-purple-50 rounded-xl border border-purple-100">
+                    <span class="block text-sm text-purple-400 uppercase tracking-widest mb-2 font-bold">考題句子 (2024/2025)</span>
+                    <div id="sentenceDisplay" class="text-lg font-medium text-slate-800 leading-relaxed min-h-[120px] flex items-center justify-center italic">請點擊下方按鈕</div>
+                </div>
+                <div class="p-6 bg-orange-50 rounded-xl border border-orange-100 relative">
+                    <span class="block text-sm text-orange-400 uppercase tracking-widest mb-2 font-bold">語氣</span>
+                    <div id="moodDisplay" class="text-3xl font-bold text-orange-600 h-24 flex items-center justify-center">?</div>
+                    <p class="text-[10px] text-orange-400 mt-2 leading-tight">註：語氣根據句意邏輯設定，旨在訓練自然的語調起伏與斷句。</p>
+                </div>
+            </div>
+            <button onclick="nextEmotion()" class="w-full bg-purple-600 text-white px-8 py-4 rounded-xl font-bold text-xl hover:bg-purple-700 shadow-lg transition transform hover:scale-105">
+                隨機抽取句子
+            </button>
+        </section>
+
+        <!-- 遊戲區 3: 演說急轉彎 -->
+        <section id="speech" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-emerald-500">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4">🚀 3. 演說急轉彎</h2>
+            <p class="text-slate-500 mb-6">針對「短述」大題，進行限時腦力激盪與範文觀摩。</p>
+            
+            <div id="topicDisplay" class="bg-emerald-50 p-8 rounded-xl border-2 border-emerald-200 mb-6">
+                <h3 class="text-3xl font-bold text-emerald-800" id="currentTopic">點擊抽取正式考題</h3>
+            </div>
+
+            <div id="scaffolding" class="hidden grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 text-center">
+                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm text-sm">📍 人物/地點</div>
+                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm text-sm">🕒 背景時間</div>
+                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm text-sm">💡 核心事件</div>
+                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm text-sm">📝 心得總結</div>
+            </div>
+
+            <div class="flex flex-col items-center gap-4">
+                <div class="text-5xl font-mono font-bold text-slate-700" id="timer">03:00</div>
+                <div class="flex gap-4">
+                    <button onclick="nextTopic()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 shadow-md transition">抽取新題目</button>
+                    <button id="timerBtn" onclick="toggleTimer()" class="bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition">開始計時</button>
+                    <button id="sampleBtn" onclick="showSample()" class="hidden bg-orange-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 shadow-md transition">查看範文與建議</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 範文 Modal -->
+        <div id="sampleModal" class="modal p-4">
+            <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto p-8 relative shadow-2xl">
+                <button onclick="closeSample()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">✕</button>
+                <h3 id="modalTitle" class="text-2xl font-bold text-emerald-700 mb-4">範文標題</h3>
+                
+                <div class="mb-6">
+                    <h4 class="font-bold border-l-4 border-emerald-500 pl-2 mb-2">📄 3分鐘範文參考</h4>
+                    <div id="modalContent" class="text-slate-700 leading-relaxed text-justify space-y-4">
+                        <!-- 範文內容 -->
+                    </div>
+                </div>
+
+                <div class="bg-orange-50 p-4 rounded-xl border border-orange-100">
+                    <h4 class="font-bold text-orange-700 mb-2">💡 專家建議與提示</h4>
+                    <ul id="modalTips" class="list-disc list-inside text-sm text-orange-800 space-y-2">
+                        <!-- 建議內容 -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-12 p-6 bg-slate-800 text-slate-300 rounded-xl text-sm">
+            <h3 class="font-bold text-white mb-2 underline italic">💡 教學資源備註：</h3>
+            <p>範文長度約 450-550 字，配合適當語速正好約 3 分鐘。建議學生練習時先求流利，再求豐富。</p>
+        </footer>
+    </div>
+
+    <script>
+        const data = {
+            single: ['兒', '疊', '瘦', '彩', '辣', '虐', '扯', '推', '陪', '也', '羞', '惹', '晉', '鷹', '庫', '植', '猴', '燙', '祖', '曼', '捉', '洋', '豐', '果', '遠', '僧', '儒', '左', '棚', '猜', '丹', '諾', '促', '毯', '全', '損', '撐', '灣', '葬', '腿', '祝', '盟', '型', '母', '熬', '抽', '六', '屬', '煩', '炯', '蜂', '人', '乖', '課', '頗'],
+            double: ['小別', '根本', '不可', '腦子', '凌晨', '本性', '念頭', '米酒', '簡單', '走啊', '饒命', '成長', '宿舍', '複方', '妹妹', '快點兒', '難得', '架子', '談吐', '腳踝', '警報', '猩猩', '優渥', '參差', '做主', '神速', '一塊兒', '看護', '天啊', '冷暖', '我們', '不去'],
+            sentences: [
+                { text: "身體健康平安，就是人生最大的幸福。", moods: ["🥰 溫暖知足", "🧘 深沉感悟", "🍃 輕鬆自在"] },
+                { text: "奮起
