@@ -79,7 +79,7 @@
         <!-- 遊戲區 1: 發音快閃店 -->
         <section id="pronounce" class="game-card active bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-blue-500">
             <h2 class="text-2xl font-bold text-blue-600 mb-4">🏠 1. 發音快閃店</h2>
-            <p class="text-slate-500 mb-6">隨機挑戰 2024 與 2025 考題中的難字與詞彙發音。</p>
+            <p class="text-slate-500 mb-6">挑戰 2023-2025 考題字詞。系統保證同一輪練習不重複出現。</p>
             <div id="wordDisplay" class="random-box bg-blue-50 border-4 border-dashed border-blue-200 rounded-xl mb-8 p-10 overflow-hidden">
                 <span class="text-4xl font-bold text-blue-300">點擊按鈕開始挑戰</span>
             </div>
@@ -92,7 +92,7 @@
         <!-- 遊戲區 2: 語氣百變怪 -->
         <section id="emotion" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-purple-500">
             <h2 class="text-2xl font-bold text-purple-600 mb-4">👾 2. 語氣百變怪</h2>
-            <p class="text-slate-500 mb-6">隨機抽取考題句子，配合情境語氣，訓練自然的口語流利度。</p>
+            <p class="text-slate-500 mb-6">融合 2023-2025 考題句子，配對適當語氣，一輪內不重複出現。</p>
             <div class="grid md:grid-cols-2 gap-4 mb-8">
                 <div class="p-6 bg-purple-50 rounded-xl border border-purple-100">
                     <span class="block text-sm text-purple-400 uppercase tracking-widest mb-2 font-bold">考題句子</span>
@@ -112,10 +112,10 @@
         <!-- 遊戲區 3: 演說急轉彎 -->
         <section id="speech" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-emerald-500">
             <h2 class="text-2xl font-bold text-emerald-600 mb-4">🚀 3. 演說急轉彎</h2>
-            <p class="text-slate-500 mb-6">針對「短述」大題，進行限時腦力激盪與範文觀摩。</p>
+            <p class="text-slate-500 mb-6">包含三年份考題題目，循環抽取不重複。</p>
             
             <div id="topicDisplay" class="bg-emerald-50 p-8 rounded-xl border-2 border-emerald-200 mb-6">
-                <h3 class="text-3xl font-bold text-emerald-800" id="currentTopic">點擊抽取正式考題</h3>
+                <h3 class="text-3xl font-bold text-emerald-800" id="currentTopic">點擊抽取題目</h3>
             </div>
 
             <div id="scaffolding" class="hidden grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 text-center">
@@ -128,7 +128,7 @@
             <div class="flex flex-col items-center gap-4">
                 <div class="text-5xl font-mono font-bold text-slate-700" id="timer">03:00</div>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="window.nextTopic()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 shadow-md transition active:scale-95">抽取新題目</button>
+                    <button onclick="window.nextTopic()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 shadow-md transition active:scale-95">抽取題目</button>
                     <button id="timerBtn" onclick="window.toggleTimer()" class="bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition active:scale-95">開始計時</button>
                     <button id="sampleBtn" onclick="window.showSample()" class="hidden bg-orange-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 shadow-md transition active:scale-95">查看範文與建議</button>
                 </div>
@@ -165,7 +165,7 @@
         <!-- 頁尾與資料來源 -->
         <footer class="mt-12 p-6 bg-slate-800 text-slate-300 rounded-xl text-sm">
             <h3 class="font-bold text-white mb-2 underline italic">💡 教學資源備註與來源：</h3>
-            <p class="mb-4 text-slate-400">本暖身工具目前已整合 2024-2025 年份之互動試題內容。您可以透過下方官方連結下載完整的歷屆考古題（PDF）供學生練習使用。</p>
+            <p class="mb-4 text-slate-400">本暖身工具目前已整合 2023-2025 年份之互動試題內容。您可以透過下方官方連結下載完整的歷屆考古題（PDF）。</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
                 <div class="flex items-center space-x-2">
                     <span>🔗</span>
@@ -184,10 +184,20 @@
     </div>
 
     <script>
-        // 資料庫內容保持不變（使用 2024 & 2025 內容）
+        // 資料庫內容：整合 2023, 2024, 2025
         const data = {
-            single: ['兒', '疊', '瘦', '彩', '辣', '虐', '扯', '推', '陪', '也', '羞', '惹', '晉', '鷹', '庫', '植', '猴', '燙', '祖', '曼', '捉', '洋', '豐', '果', '遠', '僧', '儒', '左', '棚', '猜', '丹', '諾', '促', '毯', '全', '損', '撐', '灣', '葬', '腿', '祝', '盟', '型', '母', '熬', '抽', '六', '屬', '煩', '炯', '蜂', '人', '乖', '課', '頗'],
-            double: ['小別', '根本', '不可', '腦子', '凌晨', '本性', '念頭', '米酒', '簡單', '走啊', '饒命', '成長', '宿舍', '複方', '妹妹', '快點兒', '難得', '架子', '談吐', '腳踝', '警報', '猩猩', '優渥', '參差', '做主', '神速', '一塊兒', '看護', '天啊', '冷暖', '我們', '不去'],
+            single: [
+                '兒', '疊', '瘦', '彩', '辣', '虐', '扯', '推', '陪', '也', '羞', '惹', '晉', '鷹', '庫', '植', '猴', '燙', '祖', '曼', '捉', '洋', '豐', '果', '遠', '僧', '儒',
+                '左', '棚', '猜', '丹', '諾', '促', '毯', '全', '損', '撐', '灣', '葬', '腿', '祝', '盟', '型', '母', '熬', '抽', '六', '屬', '煩', '炯', '蜂', '人', '乖', '課', '頗',
+                // 2023 新增
+                '擄', '涮', '攥', '甭', '撇', '捺', '點', '橫', '折', '勾', '挑', '豎', '歪', '憋', '怯', '撇', '揣', '挪', '攥', '瞅'
+            ],
+            double: [
+                '小別', '根本', '不可', '腦子', '凌晨', '本性', '念頭', '米酒', '簡單', '走啊', '饒命', '成長', '宿舍', '複方', '妹妹', '快點兒', '難得',
+                '架子', '談吐', '腳踝', '警報', '猩猩', '優渥', '參差', '做主', '神速', '一塊兒', '看護', '天啊', '冷暖', '我們', '不去',
+                // 2023 新增
+                '溜達', '彆扭', '噴香', '琢磨', '稀奇', '爽快', '囉嗦', '講究', '利索', '得勁', '乾脆', '痛快'
+            ],
             sentences: [
                 { text: "身體健康平安，就是人生最大的幸福。", moods: ["🥰 溫暖知足", "🧘 深沉感悟", "🍃 輕鬆自在"] },
                 { text: "奮起湖除了鐵路便當之外，野生愛玉是最有名的招牌冰品了。", moods: ["🤩 熱情介紹", "🍃 輕鬆親切", "🧐 專業解說"] },
@@ -195,7 +205,7 @@
                 { text: "俗語說得好：「船到橋頭自然直」，你放輕鬆點兒！", moods: ["🍃 溫馨安慰", "🥰 充滿希望", "✊ 鼓勵打氣"] },
                 { text: "消防隊員奮不顧身地衝進火場裡救人，令人敬佩。", moods: ["🫡 充滿敬意", "✊ 嚴肅讚揚", "😮‍💨 深深感動"] },
                 { text: "哥哥聚精會神地準備明天的測驗，你還是別去吵他了吧！", moods: ["🤫 輕聲提醒", "🫡 認真嚴肅", "🍃 委婉勸告"] },
-                { text: "這樣的說法，你能說不對嗎？能夠拿出證據來反駁嗎？", moods: ["✊ 堅定反駁", "🧐 嚴肅質質疑", "😤 強力詰問"] },
+                { text: "這樣的說法，你能說不對嗎？能夠拿出證據來反駁嗎？", moods: ["✊ 堅定反駁", "🧐 嚴肅質疑", "😤 強力詰問"] },
                 { text: "我深刻體悟到「萬兩黃金容易得，知音一個也難求。」", moods: ["🧘 哲理感悟", "😮‍💨 些許感嘆", "🥰 溫暖感念"] },
                 { text: "這道菜在色、香、味哪個方面比較突出呢？", moods: ["🧐 認真詢問", "🍃 輕鬆閒聊", "🤩 興致勃勃"] },
                 { text: "他做人腳踏實地，深信著「一分耕耘，一分收穫」。", moods: ["🫡 佩服稱讚", "✊ 堅定認同", "🧘 深沉體會"] },
@@ -208,7 +218,15 @@
                 { text: "蔬食表現的就是「食淡百味足」的清淡美學。", moods: ["🧘 禪意領悟", "🍃 雅致分享", "🫡 認真推崇"] },
                 { text: "你是自己搭公車來的？還是走路來的？", moods: ["🧐 親切關心", "🍃 隨性閒聊", "🤩 好奇詢問"] },
                 { text: "專注到極致之後，技巧反而不重要了，只剩下你和自己的對話。", moods: ["🧘 深度冥想", "🫡 專業嚴肅", "✊ 追求極致"] },
-                { text: "我想我們環島旅行的第一站就選花蓮，好嗎？", moods: ["🤩 興奮提議", "🍃 溫柔商量", "🥰 充滿期待"] }
+                { text: "我想我們環島旅行的第一站就選花蓮，好嗎？", moods: ["🤩 興奮提議", "🍃 溫柔商量", "🥰 充滿期待"] },
+                // 2023 新增
+                { text: "只要功夫深，鐵杵磨成針。這說明了恆心的重要。", moods: ["✊ 堅定鼓勵", "🧘 深沉體會", "🫡 認真讚許"] },
+                { text: "雖然這次比賽輸了，但我們雖敗猶榮，學到了很多寶貴的經驗。", moods: ["✊ 積極正面", "🥰 溫馨安慰", "😮‍💨 些許遺憾"] }
+            ],
+            topics: [
+                { id: "2024", text: "題目：我最喜歡的一部劇 (2024年試題)" },
+                { id: "2025", text: "題目：難忘的旅行 (2025年試題)" },
+                { id: "2023", text: "題目：我最敬佩的一個人 (2023年試題)" }
             ],
             topicDetails: {
                 "2024": {
@@ -220,9 +238,38 @@
                     title: "難忘的旅行",
                     content: `旅行是閱讀世界的方式，今天我想分享一次對我而言最難忘的旅行。<br><br>那是我兩年前獨自前往台灣東部——花蓮的背包客之旅。那次旅行之所以難忘，是因為它是我第一次嘗試「一個人旅行」，也是我重新認識自我的過程。<br><br>我記得抵達花蓮的那天，天氣非常好。我騎著租來的機車，沿著蘇花公路緩緩而行，左手邊是雄偉的高山，右手邊是深邃湛藍的太平洋。當我停在七星潭岸邊，聽著浪花拍打鵝卵石的清脆聲響時，我感受到前所未有的平靜。在太魯閣峽谷中，看著大自然的鬼斧神工，我深深意識到人類的渺小，許多生活中的壓力與煩惱在那一刻似乎都消失了。<br><br>此外，我也在當地的青年旅館結識了來自各地的旅人。這次旅行教會我「獨立」的價值，也讓我學會享受孤獨。它不僅是一次視覺的盛宴，更是一次心靈的洗禮。謝謝大家。`,
                     tips: ["感官描述：描述視覺與聽覺增強畫面感。", "核心主旨：帶出個人成長或心理連結。", "流利度重點：卡住時重複前一個詞並呼吸調整。", "視線交流：想像對面有觀眾，保持語調親切。"]
+                },
+                "2023": {
+                    title: "我最敬佩的一個人",
+                    content: `每個人心中都有一個榜樣，今天我想介紹我最敬佩的一個人，那就是我的中學老師。<br><br>他對教學充滿熱情，即使在放學後，也願意耐心地回答我們所有的問題。他教會我最重要的事，不是書本上的知識，而是「永不放棄」的精神。記得有一次我數學考得很差，正想放棄時，他告訴我：『失敗並不可怕，可怕的是失去嘗試的勇氣。』這句話深深影響了我。<br><br>他的人格魅力在於他對待每個學生的公平與關懷。他不僅是知識的傳遞者，更是心靈的引路人。因為他，我立志成為一個對社會有溫度的人。`,
+                    tips: ["具體特質：選擇具體的人格特質進行描述。", "故事連結：分享一個具體的小故事或金句。", "總結提升：最後昇華到對自己未來的影響。"]
                 }
             }
         };
+
+        // 不重複抽取機制
+        const pools = {
+            single: [],
+            double: [],
+            sentences: [],
+            topics: []
+        };
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function getNextItem(type) {
+            if (pools[type].length === 0) {
+                pools[type] = shuffle([...data[type]]);
+                window.showNotification(`🔄 ${type} 已抽完，重新洗牌中`);
+            }
+            return pools[type].pop();
+        }
 
         let currentYear = "";
         let timerInterval = null;
@@ -237,9 +284,7 @@
         };
 
         window.nextWord = function(type) {
-            const list = data[type];
-            if(!list) return;
-            const word = list[Math.floor(Math.random() * list.length)];
+            const word = getNextItem(type);
             const display = document.getElementById('wordDisplay');
             const fontSize = type === 'double' ? 'text-6xl md:text-7xl' : 'text-8xl md:text-9xl';
             display.innerHTML = `<span class="${fontSize} font-black text-blue-800 tracking-wider transition-all">${word}</span>`;
@@ -248,16 +293,16 @@
         };
 
         window.nextEmotion = function() {
-            const item = data.sentences[Math.floor(Math.random() * data.sentences.length)];
+            const item = getNextItem('sentences');
             const mood = item.moods[Math.floor(Math.random() * item.moods.length)];
             document.getElementById('sentenceDisplay').innerText = item.text;
             document.getElementById('moodDisplay').innerText = mood;
         };
 
         window.nextTopic = function() {
-            currentYear = Math.random() > 0.5 ? "2024" : "2025";
-            const topicStr = currentYear === "2024" ? "題目：我最喜歡的一部劇 (2024年試題)" : "題目：難忘的旅行 (2025年試題)";
-            document.getElementById('currentTopic').innerText = topicStr;
+            const topic = getNextItem('topics');
+            currentYear = topic.id;
+            document.getElementById('currentTopic').innerText = topic.text;
             document.getElementById('scaffolding').classList.remove('hidden');
             document.getElementById('sampleBtn').classList.remove('hidden');
             timeLeft = 180;
