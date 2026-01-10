@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>華語口語表達：2023-2025 認證試題暖身</title>
+    <title>華語口語表達：聲音演繹與認證試題暖身</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
@@ -15,156 +15,115 @@
             padding: 0;
             overflow-x: hidden;
         }
-        .game-card {
-            display: none;
-        }
-        .game-card.active {
-            display: block;
-            animation: fadeIn 0.4s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .random-box {
-            min-height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        .special-list-btn {
-            transition: all 0.2s;
-            text-align: left;
-        }
-        .special-list-btn.active {
-            background-color: #f97316;
-            color: white;
-            border-color: #f97316;
-            padding-left: 1.5rem;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(4px);
-        }
-        .modal.active {
-            display: flex;
-        }
-        #notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            z-index: 2000;
-        }
-        #notification.show {
-            transform: translateX(-50%) translateY(0);
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
+        .game-card { display: none; }
+        .game-card.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .random-box { min-height: 250px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .special-list-btn { transition: all 0.2s; text-align: left; }
+        .special-list-btn.active { background-color: #f97316; color: white; border-color: #f97316; padding-left: 1.5rem; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .modal.active { display: flex; }
+        
+        #notification { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 2000; }
+        #notification.show { transform: translateX(-50%) translateY(0); }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        .voice-card { transition: all 0.3s ease; }
+        .voice-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        
+        .loading-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: white; animation: wave 1.3s linear infinite; }
+        .loading-dot:nth-child(2) { animation-delay: -1.1s; }
+        .loading-dot:nth-child(3) { animation-delay: -0.9s; }
+        @keyframes wave { 0%, 60%, 100% { transform: initial; } 30% { transform: translateY(-10px); } }
     </style>
 </head>
 <body class="p-4 md:p-8 text-slate-800">
 
-    <div class="max-w-5xl mx-auto">
+    <div class="max-w-6xl mx-auto">
         <!-- 標題與導航 -->
         <header class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-slate-800 mb-2">🎤 華語口語認證試題暖身</h1>
-            <p class="text-slate-600">教育部 2023 - 2025 完整口語試題資源庫</p>
+            <h1 class="text-3xl font-bold text-slate-800 mb-2 font-black">🎤 華語口語表達暖身與聲音演繹</h1>
+            <div class="flex flex-wrap justify-center items-center gap-4 mt-4">
+                <!-- 設定按鈕 -->
+                <button onclick="window.openSettings()" class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-200 hover:border-orange-400 transition text-xs font-bold text-slate-600">
+                    <span>⚙️ API 設定</span>
+                    <span id="apiStatusBadge" class="w-2 h-2 rounded-full bg-red-400"></span>
+                </button>
+                <label class="flex items-center cursor-pointer bg-white px-4 py-2 rounded-full shadow-sm border border-slate-200 hover:border-indigo-400 transition">
+                    <span class="mr-2 text-xs font-bold text-slate-500 uppercase tracking-widest">✨ 真人高音質模式</span>
+                    <div class="relative">
+                        <input type="checkbox" id="ttsToggle" class="sr-only" onchange="window.togglePremiumMode()">
+                        <div class="block bg-slate-200 w-10 h-6 rounded-full transition"></div>
+                        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform"></div>
+                    </div>
+                </label>
+            </div>
             <nav class="flex flex-wrap justify-center gap-2 mt-6">
-                <button onclick="window.showGame('pronounce')" class="px-5 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition shadow-md active:scale-95">1. 發音快閃店</button>
-                <button onclick="window.showGame('emotion')" class="px-5 py-2 bg-purple-500 text-white rounded-full hover:bg-purple-600 transition shadow-md active:scale-95">2. 語氣百變怪</button>
-                <button onclick="window.showGame('speech')" class="px-5 py-2 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 transition shadow-md active:scale-95">3. 演說急轉彎</button>
-                <button onclick="window.showGame('special')" class="px-5 py-2 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition shadow-md active:scale-95">4. 重點音練習</button>
+                <button onclick="window.showGame('pronounce')" class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition shadow-md active:scale-95 text-xs md:text-sm font-bold">1. 發音快閃店</button>
+                <button onclick="window.showGame('emotion')" class="px-4 py-2 bg-purple-500 text-white rounded-full hover:bg-purple-600 transition shadow-md active:scale-95 text-xs md:text-sm font-bold">2. 語氣百變怪</button>
+                <button onclick="window.showGame('speech')" class="px-4 py-2 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 transition shadow-md active:scale-95 text-xs md:text-sm font-bold">3. 演說急轉彎</button>
+                <button onclick="window.showGame('special')" class="px-4 py-2 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition shadow-md active:scale-95 text-xs md:text-sm font-bold">4. 重點音練習</button>
+                <button onclick="window.showGame('guide')" class="px-4 py-2 bg-slate-800 text-white rounded-full hover:bg-slate-700 transition shadow-md active:scale-95 text-xs md:text-sm font-bold ring-2 ring-slate-300">5. 聲音演繹指南</button>
             </nav>
         </header>
 
-        <!-- 遊戲區 1: 發音快閃店 -->
+        <!-- 分頁 1-4 核心功能 -->
         <section id="pronounce" class="game-card active bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-blue-500">
-            <h2 class="text-2xl font-bold text-blue-600 mb-4">🏠 1. 發音快閃店</h2>
-            <p class="text-slate-500 mb-6">隨機挑戰 2023-2025 難字。同一輪不重複出現。</p>
-            <div id="wordDisplay" class="random-box bg-blue-50 border-4 border-dashed border-blue-200 rounded-xl mb-8 p-10 overflow-hidden">
-                <span class="text-4xl font-bold text-blue-300">點擊按鈕開始挑戰</span>
+            <h2 class="text-2xl font-bold text-blue-600 mb-4 font-bold uppercase tracking-widest text-center">🏠 發音快閃店</h2>
+            <div id="wordDisplay" class="random-box bg-blue-50 border-4 border-dashed border-blue-200 rounded-xl mb-8 p-10 overflow-hidden relative">
+                <span id="currentWordSpan" class="text-4xl font-bold text-blue-300">點擊按鈕開始挑戰</span>
             </div>
             <div class="flex justify-center gap-4">
-                <button onclick="window.nextWord('single')" class="bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold hover:bg-blue-200 transition active:scale-95">單音節字挑戰</button>
-                <button onclick="window.nextWord('double')" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition active:scale-95">雙音節詞挑戰</button>
+                <button onclick="window.nextWord('single')" class="bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold hover:bg-blue-200 transition active:scale-95 shadow-sm">單音節字</button>
+                <button onclick="window.nextWord('double')" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition active:scale-95">雙音節詞</button>
             </div>
         </section>
 
-        <!-- 遊戲區 2: 語氣百變怪 -->
-        <section id="emotion" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-purple-500">
-            <h2 class="text-2xl font-bold text-purple-600 mb-4">👾 2. 語氣百變怪</h2>
-            <p class="text-slate-500 mb-6">隨機抽取三年份考題句子配合適當語氣練習。</p>
+        <section id="emotion" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-purple-500 text-center">
+            <h2 class="text-2xl font-bold text-purple-600 mb-4 font-bold uppercase tracking-widest">👾 語氣百變怪</h2>
             <div class="grid md:grid-cols-2 gap-4 mb-8">
                 <div class="p-6 bg-purple-50 rounded-xl border-2 border-purple-200 shadow-inner">
                     <span class="block text-sm text-purple-500 uppercase tracking-widest mb-4 font-bold border-b border-purple-200 pb-2">📜 試題句子</span>
-                    <div id="sentenceDisplay" class="text-lg md:text-xl font-medium text-slate-800 leading-relaxed min-h-[140px] flex items-center justify-center text-center italic">請點擊下方按鈕開始</div>
+                    <div id="sentenceDisplay" class="text-lg md:text-xl font-medium text-slate-800 leading-relaxed min-h-[140px] flex items-center justify-center italic text-center">請點擊下方按鈕開始</div>
                 </div>
                 <div class="p-6 bg-orange-50 rounded-xl border-2 border-orange-200 shadow-inner relative">
-                    <span class="block text-sm text-orange-500 uppercase tracking-widest mb-4 font-bold border-b border-orange-200 pb-2">🎭 語氣提示</span>
-                    <div id="moodDisplay" class="text-4xl font-black text-orange-600 h-[100px] flex items-center justify-center drop-shadow-sm">?</div>
-                    <p class="text-[10px] text-orange-400 mt-4 leading-tight italic">註：語氣根據句意邏輯設定，旨在訓練自然的語調起伏與斷句。</p>
+                    <span class="block text-sm text-orange-500 uppercase tracking-widest mb-4 font-bold border-b border-orange-200 pb-2">🎭 建議語氣</span>
+                    <div id="moodDisplay" class="text-4xl font-black text-orange-600 h-[100px] flex items-center justify-center drop-shadow-sm text-center">?</div>
                 </div>
             </div>
-            <button onclick="window.nextEmotion()" class="w-full bg-purple-600 text-white px-8 py-5 rounded-xl font-bold text-xl hover:bg-purple-700 shadow-lg transition transform active:scale-95">
-                隨機抽取句子
-            </button>
+            <button onclick="window.nextEmotion()" class="w-full bg-purple-600 text-white px-8 py-5 rounded-xl font-bold text-xl hover:bg-purple-700 shadow-lg transition transform active:scale-95">隨機抽取句子</button>
         </section>
 
-        <!-- 遊戲區 3: 演說急轉彎 -->
-        <section id="speech" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-emerald-500">
-            <h2 class="text-2xl font-bold text-emerald-600 mb-4">🚀 3. 演說急轉彎</h2>
-            <p class="text-slate-500 mb-6">包含三年份正式試題題目，循環抽取。</p>
-            <div id="topicDisplay" class="bg-emerald-50 p-8 rounded-xl border-2 border-emerald-200 mb-6">
-                <h3 class="text-3xl font-bold text-emerald-800" id="currentTopic">點擊抽取題目</h3>
+        <section id="speech" class="game-card bg-white rounded-2xl p-8 shadow-xl border-t-8 border-emerald-500 text-center">
+            <h2 class="text-2xl font-bold text-emerald-600 mb-4 font-bold uppercase tracking-widest">🚀 演說急轉彎</h2>
+            <div id="topicDisplay" class="bg-emerald-50 p-8 rounded-xl border-2 border-emerald-200 mb-6 text-center">
+                <h3 class="text-2xl md:text-3xl font-bold text-emerald-800" id="currentTopic">點擊抽取題目</h3>
             </div>
             <div id="scaffolding" class="hidden grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 text-center text-xs">
-                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm">📍 人物/地點</div>
-                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm">🕒 背景時間</div>
-                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm">💡 核心事件</div>
-                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm">📝 心得總結</div>
+                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm font-bold text-emerald-600">📍 人物/地點</div>
+                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm font-bold text-emerald-600">🕒 背景時間</div>
+                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm font-bold text-emerald-600">💡 核心事件</div>
+                <div class="p-3 bg-white border border-emerald-100 rounded shadow-sm font-bold text-emerald-600">📝 心得總結</div>
             </div>
-            <div class="flex flex-col items-center gap-4">
+            <div class="flex flex-col items-center gap-4 text-center">
                 <div class="text-5xl font-mono font-bold text-slate-700" id="timer">03:00</div>
                 <div class="flex flex-wrap justify-center gap-4">
                     <button onclick="window.nextTopic()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 shadow-md transition active:scale-95">抽取題目</button>
-                    <button id="timerBtn" onclick="window.toggleTimer()" class="bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition active:scale-95">開始計時</button>
-                    <button id="sampleBtn" onclick="window.showSample()" class="hidden bg-orange-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 shadow-md transition active:scale-95">查看範文與建議</button>
+                    <button id="timerBtn" onclick="window.toggleTimer()" class="bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition active:scale-95 text-sm">開始計時</button>
+                    <button id="sampleBtn" onclick="window.showSample()" class="hidden bg-orange-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 shadow-md transition active:scale-95 text-sm">範文建議</button>
                 </div>
             </div>
         </section>
 
-        <!-- 遊戲區 4: 重點音特別練習 (拼音連寫優化) -->
         <section id="special" class="game-card bg-white rounded-2xl p-6 md:p-8 shadow-xl border-t-8 border-orange-500">
-            <h2 class="text-2xl font-bold text-orange-600 mb-4">🎯 4. 口語重點訓練清單</h2>
-            <p class="text-slate-500 mb-6">點擊下方項目查看視覺化發音指導（拼音採用詞語連寫規範）。</p>
-            
+            <h2 class="text-2xl font-bold text-orange-600 mb-4 font-bold uppercase tracking-widest text-center">🎯 口語重點訓練清單</h2>
             <div class="flex flex-col md:flex-row gap-6">
-                <!-- 左側清單 -->
-                <div class="w-full md:w-1/3 flex flex-col gap-2 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-                    <div id="specialList" class="flex flex-col gap-2">
-                        <!-- 由 JS 動態生成 -->
-                    </div>
-                </div>
-
-                <!-- 右側顯示區域 -->
-                <div class="w-full md:w-2/3 bg-orange-50 border-2 border-orange-200 rounded-2xl p-6 flex flex-col items-center justify-center min-h-[400px] shadow-inner relative overflow-hidden text-center">
+                <div class="w-full md:w-1/3 flex flex-col gap-2 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar" id="specialList"></div>
+                <div class="w-full md:w-2/3 bg-orange-50 border-2 border-orange-200 rounded-2xl p-6 flex flex-col items-center justify-center min-h-[400px] shadow-inner relative overflow-hidden text-center text-sm">
                     <div id="specialContent" class="w-full h-full flex flex-col items-center justify-center transition-all duration-300">
                         <div class="text-blue-300 text-xl italic animate-pulse">請選擇左側練習項目</div>
                     </div>
@@ -172,260 +131,352 @@
             </div>
         </section>
 
-        <!-- 範文 Modal -->
-        <div id="sampleModal" class="modal p-4" onclick="if(event.target==this) window.closeSample()">
-            <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl">
-                <button onclick="window.closeSample()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl font-bold">✕</button>
-                <h3 id="modalTitle" class="text-2xl font-bold text-emerald-700 mb-4">範文標題</h3>
-                <div id="modalContent" class="text-slate-700 leading-relaxed text-justify space-y-4 mb-6"></div>
-                <div class="bg-orange-50 p-4 rounded-xl border border-orange-100 text-sm">
-                    <h4 class="font-bold text-orange-700 mb-2">💡 專家建議</h4>
-                    <ul id="modalTips" class="list-disc list-inside text-orange-800 space-y-2"></ul>
+        <!-- 分頁 5: 聲音演繹指南 (配音核心區) -->
+        <section id="guide" class="game-card">
+            <div class="bg-slate-900 text-white p-10 rounded-t-2xl text-center relative overflow-hidden text-center">
+                <h2 class="text-3xl font-black mb-2 tracking-tight">聲音演繹與共鳴訓練實務指南</h2>
+                <p class="text-slate-400 font-bold uppercase tracking-widest text-sm">從理論到實戰，修煉真人口語感</p>
+                <div id="apiLoadingOverlay" class="hidden absolute top-4 right-4 flex items-center gap-1">
+                    <div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div>
                 </div>
+            </div>
+
+            <div class="bg-white p-6 md:p-10 space-y-20 rounded-b-2xl shadow-2xl">
+                <!-- 真人語氣修煉 -->
+                <div class="bg-gradient-to-br from-indigo-50 to-blue-50 p-8 rounded-3xl border-2 border-indigo-100 shadow-sm">
+                    <h3 class="text-2xl font-black text-slate-800 mb-8 border-l-8 border-indigo-600 pl-4">✨ 真人語氣自然修煉法</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
+                        <div class="p-6 bg-white rounded-2xl border border-indigo-100 flex flex-col justify-between voice-card">
+                            <h4 class="font-black text-indigo-800 mb-3 underline decoration-indigo-200 italic">1. 對象感訓練</h4>
+                            <p class="text-xs text-slate-600 mb-6 leading-relaxed">說話時想像正對著某個人。對象變了，聲音就會自然帶有溫度。</p>
+                            <button onclick="window.speak('聽我說，這件事真的不是你想的那樣。', '溫柔、耐心、對老友解釋的語氣')" class="bg-indigo-600 text-white py-3 rounded-xl font-bold active:scale-95 shadow-md">🔊 聽示範：對象感</button>
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl border border-indigo-100 flex flex-col justify-between voice-card">
+                            <h4 class="font-black text-indigo-800 mb-3 underline decoration-indigo-200 italic">2. 邏輯重音位移</h4>
+                            <p class="text-xs text-slate-600 mb-4 leading-relaxed">台詞：「你說你因為愛上了他......」</p>
+                            <div class="flex flex-col gap-2">
+                                <button onclick="window.speak('你說你因為愛上了他', '強調「你」')" class="text-[10px] bg-slate-100 px-2 py-1 rounded hover:bg-slate-200 transition">強調：你</button>
+                                <button onclick="window.speak('你說你因為愛上了他', '強調「愛上了」')" class="text-[10px] bg-slate-100 px-2 py-1 rounded hover:bg-slate-200 transition">強調：愛上了</button>
+                                <button onclick="window.speak('你說你因為愛上了他', '強調「他」')" class="text-[10px] bg-slate-100 px-2 py-1 rounded hover:bg-slate-200 transition">強調：他</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 共鳴腔切換 -->
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-8 border-l-8 border-blue-600 pl-4 flex items-center text-blue-600 font-black">
+                        ⚡ 共鳴腔切換訓練
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 text-center text-[10px]">
+                        <div class="voice-card bg-blue-50 p-4 rounded-xl border border-blue-100 flex flex-col justify-between min-h-[160px]">
+                            <h4 class="font-black text-blue-800 mb-1 uppercase">🧠 顱腔</h4>
+                            <p class="text-slate-500 mb-3 italic">「歡迎蒞臨全球影展頒獎盛典......」</p>
+                            <button onclick="window.speak('歡迎蒞臨全球影展頒獎盛典', '顱腔、穿透力、頒獎盛典主持人語氣')" class="bg-blue-600 text-white p-2 rounded-lg font-bold active:scale-95 shadow-sm">🔊 示範</button>
+                        </div>
+                        <div class="voice-card bg-orange-50 p-4 rounded-xl border border-orange-100 flex flex-col justify-between min-h-[160px]">
+                            <h4 class="font-black text-orange-800 mb-1 uppercase">👃 鼻腔</h4>
+                            <p class="text-slate-500 mb-3 italic">「您的專屬智能管家為您服務......」</p>
+                            <button onclick="window.speak('您的專屬智能管家為您服務', '鼻腔、輕盈、極致溫柔的智能助手')" class="bg-orange-600 text-white p-2 rounded-lg font-bold active:scale-95 shadow-sm">🔊 示範</button>
+                        </div>
+                        <div class="voice-card bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex flex-col justify-between min-h-[160px]">
+                            <h4 class="font-black text-emerald-800 mb-1 uppercase">👄 口腔</h4>
+                            <p class="text-slate-500 mb-3 italic">「國立臺灣師範大學......」</p>
+                            <button onclick="window.speak('國立臺灣師範大學', '口腔、清晰端莊的播報語氣')" class="bg-emerald-600 text-white p-2 rounded-lg font-bold active:scale-95 shadow-sm">🔊 示範</button>
+                        </div>
+                        <div class="voice-card bg-purple-50 p-4 rounded-xl border border-purple-100 flex flex-col justify-between min-h-[160px]">
+                            <h4 class="font-black text-purple-800 mb-1 uppercase">🗣️ 喉腔</h4>
+                            <p class="text-slate-500 mb-3 italic">「窗外的雨滴滴答答地落下......」</p>
+                            <button onclick="window.speak('窗外的雨滴滴答答地落下', '喉腔、低沈、感性的旁白語氣')" class="bg-purple-600 text-white p-2 rounded-lg font-bold active:scale-95 shadow-sm">🔊 示範</button>
+                        </div>
+                        <div class="voice-card bg-red-50 p-4 rounded-xl border border-red-100 flex flex-col justify-between min-h-[160px]">
+                            <h4 class="font-black text-red-800 mb-1 uppercase">🤰 腹腔</h4>
+                            <p class="text-slate-500 mb-3 italic">「各位選手請到出發線就位......」</p>
+                            <button onclick="window.speak('各位選手請到出發線就位', '腹腔發力、爆發力、裁判指令')" class="bg-red-600 text-white p-2 rounded-lg font-bold active:scale-95 shadow-sm">🔊 示範</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 核心要素詳解 -->
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-8 border-l-8 border-orange-600 pl-4 text-orange-600 font-black">
+                        🎭 聲音核心演繹專項訓練
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-[11px]">
+                        <!-- 音色 -->
+                        <div class="bg-white p-6 rounded-3xl border-2 border-blue-50 shadow-lg voice-card">
+                            <h4 class="font-black text-blue-900 text-base mb-4 flex items-center">🌈 音色：變換角色共鳴</h4>
+                            <div class="space-y-4 text-slate-700">
+                                <div class="bg-blue-50 p-3 rounded-xl">
+                                    <p class="font-bold text-blue-800 underline mb-1">步驟指南：</p>
+                                    <ol class="list-decimal list-inside space-y-0.5">
+                                        <li>生理定位：決定角色重心。</li>
+                                        <li>共鳴鎖定：選定腔室。</li>
+                                    </ol>
+                                </div>
+                                <div class="space-y-1.5">
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded">
+                                        <p>👶 小孩「奶奶我想吃那個......」</p>
+                                        <button onclick="window.speak('奶奶我想吃那個', '幼童撒嬌語氣')" class="text-blue-600 font-bold">🔊</button>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded">
+                                        <p>👵 老人「時光過得真快啊......」</p>
+                                        <button onclick="window.speak('時光過得真快啊', '年邁滄桑語氣')" class="text-blue-600 font-bold">🔊</button>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded">
+                                        <p>👹 巨人「是誰在我的領地？」</p>
+                                        <button onclick="window.speak('是誰在我的領地', '低沈威嚴巨人語氣')" class="text-blue-600 font-bold">🔊</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 情感 -->
+                        <div class="bg-white p-6 rounded-3xl border-2 border-red-50 shadow-lg voice-card">
+                            <h4 class="font-black text-red-900 text-base mb-4 flex items-center">❤️ 情感：同一台詞多情緒</h4>
+                            <div class="space-y-4 text-slate-700">
+                                <div class="bg-red-50 p-3 rounded-xl">
+                                    <p class="font-bold text-red-800 underline mb-1">步驟指南：</p>
+                                    <ol class="list-decimal list-inside space-y-0.5">
+                                        <li>氣息同步：決定呼吸頻率。</li>
+                                        <li>情感上色：決定音準起伏。</li>
+                                    </ol>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-[9px]">
+                                    <div class="flex justify-between items-center p-2 bg-white rounded border border-red-100 shadow-sm">
+                                        <span>🌟 喜 「真的嗎？」</span>
+                                        <button onclick="window.speak('真的嗎', '非常喜悅驚喜')" class="text-red-500 font-bold">🔊</button>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-white rounded border border-red-100 shadow-sm">
+                                        <span>🔥 怒 「真的嗎？」</span>
+                                        <button onclick="window.speak('真的嗎', '嚴厲質疑憤怒')" class="text-red-500 font-bold">🔊</button>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-white rounded border border-red-100 shadow-sm">
+                                        <span>🥀 哀 「真的嗎......」</span>
+                                        <button onclick="window.speak('真的嗎', '虛弱悲傷遺憾')" class="text-red-500 font-bold">🔊</button>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-white rounded border border-red-100 shadow-sm">
+                                        <span>⚡ 驚 「真的嗎？」</span>
+                                        <button onclick="window.speak('真的嗎', '極度驚訝恐懼')" class="text-red-500 font-bold">🔊</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center bg-slate-50 p-10 rounded-2xl border-2 border-dashed border-slate-200">
+                    <p class="text-2xl font-medium italic text-slate-600">「別只背食譜，進廚房動手做吧！」</p>
+                    <p class="text-xs text-slate-400 mt-4 italic">— 聲音即人格，語氣即風景 —</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 設定 Modal -->
+        <div id="settingsModal" class="modal p-4" onclick="if(event.target==this) window.closeSettings()">
+            <div class="bg-white rounded-2xl max-w-sm w-full p-8 shadow-2xl text-center">
+                <h3 class="text-xl font-black text-slate-800 mb-2">Gemini API 設定</h3>
+                <p class="text-xs text-slate-400 mb-6 italic leading-relaxed">請輸入您的 API Key 以啟用真人高音質配音模式。此金鑰僅存於您的瀏覽器中。</p>
+                <input type="password" id="apiInput" placeholder="在此貼上您的 API Key" class="w-full px-4 py-3 rounded-xl border-2 border-slate-100 focus:border-indigo-400 outline-none transition mb-4 text-center font-mono">
+                <div class="flex gap-2">
+                    <button onclick="window.saveApiKey()" class="flex-1 bg-indigo-600 text-white py-3 rounded-xl font-bold active:scale-95 transition">儲存金鑰</button>
+                    <button onclick="window.closeSettings()" class="bg-slate-100 text-slate-400 px-4 rounded-xl hover:bg-slate-200">取消</button>
+                </div>
+                <p class="text-[9px] text-slate-400 mt-4 underline"><a href="https://aistudio.google.com/app/apikey" target="_blank">點此獲取免費 API Key</a></p>
             </div>
         </div>
 
-        <!-- 通知 -->
-        <div id="notification" class="bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl text-center min-w-[200px] pointer-events-none opacity-0 transition-opacity duration-300"></div>
-
-        <!-- 頁尾 -->
-        <footer class="mt-12 p-6 bg-slate-800 text-slate-300 rounded-xl text-xs">
-            <h3 class="font-bold text-white mb-2 underline italic text-sm">💡 考古題來源（教育部官方連結）：</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
-                <a href="https://ws.moe.edu.tw/Download.ashx?u=LzAwMS9VcGxvYWQvNy9yZWxmaWxlLzkxMjEvOTAzOTQvMjBjYjlmMWUtNWM0ZS00ZTVkLTgyNDEtMGY5ZjRkZDM0ODk4LnBkZg%3d%3d&n=MjAyM%2bW5tOaVmeiCsumDqOWwjeWkluiPr%2biqnuaVmeWtuOiDveWKm%2biqjeitieiAg%2bippuippumhjF%2foj6%2foqp7lj6Poqp7oiIfooajpgZQucGRm&icon=..pdf" target="_blank" class="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition"><span>📄</span><span>2023年考古題</span></a>
-                <a href="https://ws.moe.edu.tw/Download.ashx?u=LzAwMS9VcGxvYWQvNy9yZWxmaWxlLzkxMjEvOTU1NTEvZWZlYTU5OTItZjUyNy00ZDI2LWE4NjktYzk0OTQ2YWZjM2JlLnBkZg%3d%3d&n=MjAyNOW5tOaVmeiCsumDqOWwjeWkluiPr%2biqnuaVmeWtuOiDveWKm%2biqjeitieiAg%2bippl%2foqabpoYxf6I%2bv6Kqe5Y%2bj6Kqe6IiH6KGo6YGULnBkZg%3d%3d&icon=..pdf" target="_blank" class="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition"><span>📄</span><span>2024年考古題</span></a>
-                <a href="https://ws.moe.edu.tw/Download.ashx?u=LzAwMS9VcGxvYWQvNy9yZWxmaWxlLzkxMjEvMTAxMjYzL2I4YzVmNTY5LWI0YTAtNGVjYS05ZjA0LWFjMzU3Y2I2M2QyMC5wZGY%3d&n=MjAyNeW5tOaVmeiCsumDqOWwjeWkluiPr%2biqnuaVmeWtuOiDveWKm%2biqjeitieiAg%2bippl%2foqabpoYxf6I%2bv6Kqe5Y%2bj6Kqe6IiH6KGo6YGUX%2bWFrOWRiueJiC5wZGY%3d&icon=..pdf" target="_blank" class="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition"><span>📄</span><span>2025年考古題</span></a>
+        <!-- 範文 Modal -->
+        <div id="sampleModal" class="modal p-4" onclick="if(event.target==this) window.closeSample()">
+            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl text-sm italic italic leading-relaxed">
+                <button onclick="window.closeSample()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-500 text-2xl font-bold">✕</button>
+                <div id="modalContent" class="text-slate-700 space-y-4"></div>
             </div>
+        </div>
+
+        <div id="notification" class="bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl text-center min-w-[200px] pointer-events-none opacity-0"></div>
+
+        <footer class="mt-12 p-6 bg-slate-800 text-slate-300 rounded-xl text-[10px] text-center uppercase tracking-widest font-bold">
+            <p>2023-2025 Education Lab | Natural Voice Engine</p>
         </footer>
     </div>
 
     <script>
+        // 資料庫內容 (11項重點音)
+        const specialData = [
+            { title: "1. 二 (èr)", pinyin: "èr", focus: "捲舌元音", examples: ["耳 (ěr)", "而 (ér)", "貳 (èr)", "兒童 (értóng)"], tips: "舌尖向後縮並向上捲起，動程到位。" },
+            { title: "2. 惹 (rě)", pinyin: "rě", focus: "翹舌聲母 r-", examples: ["熱 (rè)", "肉 (ròu)", "若 (ruò)", "人 (rén)"], tips: "舌尖向上翹起靠近硬顎前部，氣流自然流出。" },
+            { title: "3. 憑 (píng)", pinyin: "píng", focus: "後鼻音 -ing", examples: ["平 (píng)", "冰 (bīng)", "星 (xīng)", "靈 (líng)"], tips: "舌根後縮與軟顎接觸，確保鼻音飽滿。" },
+            { title: "4. 手 (shǒu)", pinyin: "shǒu", focus: "翹舌聲母 sh-", examples: ["書 (shū)", "山 (shān)", "水 (shuǐ)", "獸 (shòu)"], tips: "複韻母 ou 由 o 滑向 u，口形變圓。" },
+            { title: "5. 風範 (fēngfàn)", pinyin: "fēngfàn", focus: "後鼻音 → 前鼻音", examples: ["生產 (shēngchǎn)", "正反 (zhèngfǎn)", "承擔 (chéngdān)"], tips: "注意從舌根後部的 ng 迅速轉換到舌尖的 n。" },
+            { title: "6. 真誠 (zhēnchéng)", pinyin: "zhēnchéng", focus: "前鼻音 → 後鼻音", examples: ["深層 (shēncéng)", "戰場 (zhànchǎng)", "真正 (zhēnzhèng)"], tips: "前鼻音 n 要乾脆，後鼻音 ng 空間感要大。" },
+            { title: "7. 老伴兒 (lǎobànr)", pinyin: "lǎobànr", focus: "兒化韻", examples: ["一點兒 (yìdiǎnr)", "心眼兒 (xīnyǎnr)"], tips: "尾音 n 脫落並鼻化，捲舌需流暢。" },
+            { title: "8. 容忍 (róngrěn)", pinyin: "róngrěn", focus: "r- 連續發音", examples: ["仍然 (réngrán)", "柔弱 (róuruò)"], tips: "連續翹舌音需保持肌肉張力。" },
+            { title: "9. 去啊 (qùwa)", pinyin: "qùwa", focus: "語氣詞連音", examples: ["苦啊 (kǔwa)", "哭啊 (kūwa)"], tips: "受前字 u 影響，「啊」帶有 wa 音值。" },
+            { title: "10. 石頭 (shítou)", pinyin: "shítou", focus: "輕聲詞綴", examples: ["舌頭 (shétou)", "枕頭 (zhěntou)"], tips: "輕聲短促，共鳴集中在口腔前部。" },
+            { title: "11. 搭棚 (dāpéng)", pinyin: "dāpéng", focus: "-eng 發音", examples: ["搭棚 (dāpéng)", "豐富 (fēngfù)"], tips: "重點在於 peng、feng 的 [e] 要清晰，嚴禁發成 [o]。" }
+        ];
+
         const data = {
-            single: ['兒', '疊', '瘦', '彩', '辣', '虐', '扯', '推', '陪', '也', '羞', '惹', '晉', '鷹', '庫', '植', '猴', '燙', '祖', '曼', '捉', '洋', '豐', '果', '遠', '僧', '儒', '左', '棚', '猜', '丹', '諾', '促', '毯', '全', '損', '撐', '灣', '葬', '腿', '祝', '盟', '型', '母', '熬', '抽', '六', '屬', '煩', '炯', '蜂', '人', '乖', '課', '頗', '擄', '涮', '攥', '甭', '撇', '捺', '點', '橫', '折', '勾', '挑', '豎', '歪', '憋', '怯', '撇', '揣', '挪', '瞅'],
-            double: ['小別', '根本', '不可', '腦子', '凌晨', '本性', '念頭', '米酒', '簡單', '走啊', '饒命', '成長', '宿舍', '複方', '妹妹', '快點兒', '難得', '架子', '談吐', '腳踝', '警報', '猩猩', '優渥', '參差', '做主', '神速', '一塊兒', '看護', '天啊', '冷暖', '我們', '不去', '溜達', '彆扭', '噴香', '琢磨', '稀奇', '爽快', '囉嗦', '講究', '利索', '得勁', '乾脆', '痛快'],
-            sentences: [
-                { text: "身體健康平安，就是人生最大的幸福。", moods: ["🥰 溫暖知足", "🧘 深沉感悟", "🍃 輕鬆自在"] },
-                { text: "奮起湖除了鐵路便當之外，野生愛玉是最有名的招牌冰品了。", moods: ["🤩 熱情介紹", "🍃 輕鬆親切", "🧐 專業解說"] },
-                { text: "我終於明白，每一條路徑都有它不得不這樣跋涉的理由。", moods: ["🧘 深沉感悟", "😮‍💨 感嘆萬千", "✊ 堅定體認"] },
-                { text: "俗語說得好：「船到橋頭自然直」，你放輕鬆點兒！", moods: ["🍃 溫馨安慰", "🥰 充滿希望", "✊ 鼓勵打氣"] },
-                { text: "消防隊員奮不顧身地衝進火場裡救人，令人敬佩。", moods: ["🫡 充滿敬意", "✊ 嚴肅讚揚", "😮‍💨 深深感動"] },
-                { text: "只要功夫深，鐵杵磨成針。這說明了恆心的重要。", moods: ["✊ 堅定鼓勵", "🫡 認真讚許", "🧘 體認精進"] },
-                { text: "杜鵑花爭奇鬥艷，正是春意盎然的最佳寫照吧！", moods: ["🤩 驚喜讚嘆", "🍃 愉悅開朗", "🥰 賞心悅目"] },
-                { text: "聽你一席話，有如暮鼓晨鐘般，使我大徹大悟。", moods: ["🥰 誠摯感激", "🧘 覺悟醒悟", "✊ 充滿希望"] }
-            ],
-            topics: [
-                { id: "2024", text: "題目：我最喜歡的一部劇 (2024年試題)" },
-                { id: "2025", text: "題目：難忘的旅行 (2025年試題)" },
-                { id: "2023", text: "題目：我最敬佩的一個人 (2023年試題)" }
-            ],
-            // 拼音連寫優化後的重點音資料
-            special: [
-                { 
-                    id: "er", title: "1. 二 (èr)", pinyin: "èr", focus: "捲舌元音 (Retroflex)", 
-                    examples: ["耳 (ěr)", "而 (ér)", "貳 (èr)", "兒童 (értóng)"],
-                    tips: "發音點：舌尖向後縮並向上捲起，注意動程要完整到位。"
-                },
-                { 
-                    id: "re", title: "2. 惹 (rě)", pinyin: "rě", focus: "翹舌聲母 r- (Voiced)", 
-                    examples: ["熱 (rè)", "肉 (ròu)", "若 (ruò)", "人 (rén)"],
-                    tips: "發音點：舌尖向上翹起靠近硬顎前部，氣流摩擦而出，嚴禁發成 l 音。"
-                },
-                { 
-                    id: "ping", title: "3. 憑 (píng)", pinyin: "píng", focus: "後鼻音 -ing 搭配", 
-                    examples: ["平、瓶 (píng)", "冰、病 (bīng/bìng)", "星、精 (xīng/jīng)", "靈、定 (líng/dìng)"],
-                    tips: "發音點：舌根後縮與軟顎接觸，確保 ing 圓潤飽滿，共鳴點偏後。"
-                },
-                { 
-                    id: "shou", title: "4. 手 (shǒu)", pinyin: "shǒu", focus: "翹舌聲母 sh-", 
-                    examples: ["書 (shū)", "山 (shān)", "水 (shuǐ)", "獸 (shòu)"],
-                    tips: "發音點：複韻母 ou 要有完整動程，從 o 滑向 u，口形由開變閉。"
-                },
-                { 
-                    id: "fan", title: "5. 風範 (fēngfàn)", pinyin: "fēngfàn", focus: "後鼻音(-ng) → 前鼻音(-n)", 
-                    examples: ["生產 (shēngchǎn)", "正反 (zhèngfǎn)", "承擔 (chéngdān)", "更換 (gēnghuàn)"],
-                    tips: "練習點：注意從舌根後部的 ng 迅速轉換到舌尖抵住齒背的 n。"
-                },
-                { 
-                    id: "zheng", title: "6. 真誠 (zhēnchéng)", pinyin: "zhēnchéng", focus: "前鼻音(-n) → 後鼻音(-ng)", 
-                    examples: ["深層 (shēncéng)", "戰場 (zhànchǎng)", "真正 (zhēnzhèng)", "溫馨 (wēnxīn)"],
-                    tips: "練習點：前鼻音 n 要乾脆，後鼻音 ng 空間感要大，舌位轉換需滑順。"
-                },
-                { 
-                    id: "banr", title: "7. 老伴兒 (lǎobànr)", pinyin: "lǎobànr", focus: "兒化韻 (r-coloring)", 
-                    examples: ["一點兒 (yìdiǎnr)", "心眼兒 (xīnyǎnr)", "蒜瓣兒 (suànbànr)", "轉圈兒 (zhuànquānr)"],
-                    tips: "練習點：尾音 n 脫落並帶有鼻化效果，捲舌動程要與前字融合。"
-                },
-                { 
-                    id: "rong", title: "8. 容忍 (róngrěn)", pinyin: "róngrěn", focus: "翹舌聲母 r- 連續發音", 
-                    examples: ["仍然 (réngrán)", "柔弱 (róuruò)", "擾亂 (rǎoluàn)", "濡染 (rúrǎn)"],
-                    tips: "練習點：連續的翹舌音轉換要保持肌肉張力，不可因快速讀過而變音。"
-                },
-                { 
-                    id: "qua", title: "9. 去啊 (qùwa)", pinyin: "qùwa", focus: "語氣詞「啊」的連音變化", 
-                    examples: ["苦啊 (kǔwa)", "哭啊 (kūwa)", "走啊 (zǒuwa)", "好啊 (hǎowa)"],
-                    tips: "練習點：當前字結尾為 u, ao, ou 時，「啊」會受影響帶有 wa 的音值，發音應連貫。"
-                },
-                { 
-                    id: "tou", title: "10. 石頭 (shítou)", pinyin: "shítou", focus: "固定輕聲詞綴「頭」", 
-                    examples: ["舌頭 (shétou)", "枕頭 (zhěntou)", "木頭 (mùtou)", "額頭 (étou)"],
-                    tips: "練習點：輕聲要短促有力，舌尖放鬆，共鳴集中在口腔前部。"
-                },
-                { 
-                    id: "da", title: "11. 搭棚 (dāpéng)", pinyin: "dāpéng", focus: "韻母 -eng 正確發音", 
-                    examples: ["搭棚 (dāpéng)", "風範 (fēngfàn)", "碰壁 (pèngbì)", "豐富 (fēngfù)"],
-                    tips: "練習點：重點在於 peng、feng 的 [e] 元音要清晰，嚴禁發成 [o] (如 pong/fong)。"
-                }
-            ],
-            topicDetails: {
-                "2024": { title: "我最喜歡的一部劇", content: "今天我要分享的是《請回答1988》。這部劇細膩刻劃了住在「雙門洞」五個家庭之間的情誼。我之所以喜歡這部劇，是因為它展現了「平凡中的偉大」，教會我珍惜珍惜當下與親友相處的時光。", tips: ["結構分明", "情感共鳴"] },
-                "2025": { title: "難忘的旅行", content: "旅行是閱讀世界的方式。兩年前我獨自前往台灣東部的花蓮之旅，聽著浪花拍打鵝卵石的聲響，我感受到前所未有的平靜。這次旅行教會我獨立的價值，也讓我學會享受孤獨。", tips: ["感官描述", "核心主旨"] },
-                "2023": { title: "我最敬佩的一個人", content: "今天我想介紹我最敬佩的一個人，那就是我的中學老師。他不僅是知識的傳遞者，更是心靈的引路人，教會我「失敗並不可怕，可怕的是失去嘗試的勇氣」。", tips: ["具體特質", "故事連結"] }
-            }
+            single: ['兒', '疊', '瘦', '彩', '辣', '虐', '撇', '揣', '挪', '瞅', '惹', '儒', '晉', '鷹', '庫', '植', '猴', '燙', '祖', '曼', '捉', '洋', '豐', '果', '遠', '僧', '儒'],
+            topics: [{ id: "2024", text: "題目：我最喜歡的一部劇 (2024)" },{ id: "2025", text: "題目：難忘的旅行 (2025)" },{ id: "2023", text: "題目：我最敬佩的一個人 (2023)" }],
+            topicDetails: { "2024": "今天我要分享的是《請回答1988》。這部劇細膩刻劃了五個家庭之間的情誼......", "2025": "兩年前我獨自前往台灣東部的花蓮之旅，聽著浪花拍打鵝卵石的聲響......", "2023": "我最敬佩的是我的中學老師。他不僅是知識的傳遞者，更是心靈的引路人......" }
         };
 
         const pools = { single: [], double: [], sentences: [], topics: [] };
+        let currentYear = "";
 
-        function getNextItem(type) {
-            if (pools[type].length === 0) {
-                const raw = [...data[type]];
-                for (let i = raw.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [raw[i], raw[j]] = [raw[j], raw[i]];
-                }
-                pools[type] = raw;
-                window.showNotification(`🔄 抽取池已重新洗牌`);
+        // API 儲存與管理
+        window.openSettings = () => document.getElementById('settingsModal').classList.add('active');
+        window.closeSettings = () => document.getElementById('settingsModal').classList.remove('active');
+        window.saveApiKey = () => {
+            const key = document.getElementById('apiInput').value.trim();
+            if(key) {
+                sessionStorage.setItem('gemini_api_key', key);
+                window.updateApiBadge(true);
+                window.showNotification("✅ 金鑰已就緒");
+                window.closeSettings();
             }
-            return pools[type].pop();
-        }
+        };
+        window.updateApiBadge = (ready) => {
+            const b = document.getElementById('apiStatusBadge');
+            b.classList.remove('bg-red-400', 'bg-green-400');
+            b.classList.add(ready ? 'bg-green-400' : 'bg-red-400');
+        };
 
+        // TTS 核心
+        window.togglePremiumMode = () => {
+            const ready = !!sessionStorage.getItem('gemini_api_key');
+            const toggle = document.getElementById('ttsToggle');
+            if(toggle.checked && !ready) {
+                toggle.checked = false;
+                window.showNotification("⚠️ 請先設定 API Key");
+                window.openSettings();
+                return;
+            }
+            const dot = document.querySelector('.dot');
+            dot.style.transform = toggle.checked ? "translateX(16px)" : "translateX(0)";
+            toggle.nextElementSibling.classList.toggle('bg-indigo-600', toggle.checked);
+            toggle.nextElementSibling.classList.toggle('bg-slate-200', !toggle.checked);
+        };
+
+        window.speak = async (text, emotion) => {
+            const key = sessionStorage.getItem('gemini_api_key');
+            if (document.getElementById('ttsToggle').checked && key) {
+                await window.speakWithGemini(text, emotion, key);
+            } else {
+                window.speakStandard(text);
+            }
+        };
+
+        window.speakStandard = (text) => {
+            if (!window.speechSynthesis) return;
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'zh-TW';
+            window.speechSynthesis.speak(u);
+        };
+
+        window.speakWithGemini = async (text, emotion, key) => {
+            document.getElementById('apiLoadingOverlay')?.classList.remove('hidden');
+            const prompt = `請扮演專業配音導師，以「${emotion}」示範下段文字，要求呼吸自然、重音準確、具有極強的真人對話感：\n\n「${text}」`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: { responseModalities: ["AUDIO"], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } } },
+                model: "gemini-2.5-flash-preview-tts"
+            };
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${key}`, {
+                    method: 'POST',
+                    body: JSON.stringify(payload),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const r = await response.json();
+                const audioData = r.candidates[0].content.parts[0].inlineData;
+                window.playPCM(audioData.data, audioData.mimeType);
+            } catch (e) { window.showNotification("❌ 請求失敗"); }
+            finally { document.getElementById('apiLoadingOverlay')?.classList.add('hidden'); }
+        };
+
+        window.playPCM = (base64, mime) => {
+            const pcm = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+            const rate = parseInt(mime.match(/rate=(\d+)/)?.[1] || "24000");
+            const buffer = new ArrayBuffer(44), view = new DataView(buffer);
+            const s = (o, str) => { for(let i=0;i<str.length;i++) view.setUint8(o+i, str.charCodeAt(i)); };
+            s(0,'RIFF'); view.setUint32(4, 36+pcm.length, true); s(8,'WAVE'); s(12,'fmt '); view.setUint32(16,16,true);
+            view.setUint16(20,1,true); view.setUint16(22,1,true); view.setUint32(24,rate,true);
+            view.setUint32(28,rate*2,true); view.setUint16(32,2,true); view.setUint16(34,16,true);
+            s(36,'data'); view.setUint32(40,pcm.length,true);
+            const blob = new Blob([buffer, pcm], { type: 'audio/wav' });
+            new Audio(URL.createObjectURL(blob)).play();
+        };
+
+        // 頁面控制
         window.showGame = (id) => {
             document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            if(id === 'special' && !document.querySelector('.special-list-btn.active')) {
-                window.loadSpecialDetail(0);
-            }
-            window.stopTimer();
+            if(id === 'special') window.loadSpecialDetail(0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
         window.nextWord = (type) => {
-            const word = getNextItem(type);
-            const display = document.getElementById('wordDisplay');
-            display.innerHTML = `<span class="${type==='double'?'text-6xl md:text-7xl':'text-8xl md:text-9xl'} font-black text-blue-800 tracking-wider">${word}</span>`;
+            if (pools.single.length === 0) pools.single = [...data.single].sort(() => Math.random() - 0.5);
+            const word = pools.single.pop();
+            document.getElementById('currentWordSpan').innerText = word;
+            document.getElementById('currentWordSpan').className = "text-8xl font-black text-blue-800";
         };
 
         window.nextEmotion = () => {
-            const item = getNextItem('sentences');
-            const mood = item.moods[Math.floor(Math.random() * item.moods.length)];
-            document.getElementById('sentenceDisplay').innerText = item.text;
-            document.getElementById('moodDisplay').innerText = mood;
+            document.getElementById('sentenceDisplay').innerText = "你說你因為愛上了他......真的嗎？";
+            document.getElementById('moodDisplay').innerText = "⚡ 驚喜/不解";
         };
 
         window.nextTopic = () => {
-            const topic = getNextItem('topics');
-            currentYear = topic.id;
-            document.getElementById('currentTopic').innerText = topic.text;
+            const t = data.topics[Math.floor(Math.random()*3)];
+            currentYear = t.id;
+            document.getElementById('currentTopic').innerText = t.text;
             document.getElementById('scaffolding').classList.remove('hidden');
             document.getElementById('sampleBtn').classList.remove('hidden');
-            timeLeft = 180;
-            window.updateTimerDisplay();
-            window.stopTimer();
         };
 
         function initSpecialList() {
-            const container = document.getElementById('specialList');
-            container.innerHTML = "";
-            data.special.forEach((item, index) => {
-                const btn = document.createElement('button');
-                btn.className = "special-list-btn w-full px-4 py-3 rounded-xl font-bold border-2 border-orange-100 hover:bg-orange-100 transition truncate active:scale-95";
-                btn.innerText = item.title;
-                btn.onclick = () => window.loadSpecialDetail(index);
-                container.appendChild(btn);
+            const c = document.getElementById('specialList');
+            specialData.forEach((item, i) => {
+                const b = document.createElement('button');
+                b.className = "special-list-btn w-full px-4 py-3 rounded-xl font-bold border-2 border-orange-100 hover:bg-orange-100 transition truncate text-xs";
+                b.innerText = item.title;
+                b.onclick = () => window.loadSpecialDetail(i);
+                c.appendChild(b);
             });
         }
 
-        window.loadSpecialDetail = (index) => {
-            const item = data.special[index];
-            const btns = document.querySelectorAll('.special-list-btn');
-            btns.forEach((b, i) => {
-                if(i === index) b.classList.add('active');
-                else b.classList.remove('active');
-            });
-
-            const display = document.getElementById('specialContent');
-            const examplesHtml = item.examples.map(ex => `
-                <span class="bg-white px-4 py-2 rounded-lg shadow-sm border border-orange-200 text-orange-700 font-bold">${ex}</span>
-            `).join('');
-
-            display.innerHTML = `
-                <div class="text-7xl md:text-8xl font-black text-orange-600 mb-4 animate-pulse">${item.pinyin}</div>
-                <div class="px-6 py-2 bg-orange-500 text-white rounded-full font-bold mb-6 shadow-md text-lg">${item.focus}</div>
-                
-                <div class="w-full space-y-6">
-                    <div class="bg-white p-6 rounded-2xl border-l-8 border-orange-400 shadow-sm text-center md:text-left">
-                        <h4 class="font-bold text-orange-800 mb-2">📒 發音要領</h4>
-                        <p class="text-slate-600 leading-relaxed italic">${item.tips}</p>
-                    </div>
-                    
-                    <div>
-                        <h4 class="font-bold text-slate-500 mb-3 text-sm uppercase tracking-widest text-center">📝 挑戰練習字詞</h4>
-                        <div class="flex flex-wrap gap-3 justify-center">
-                            ${examplesHtml}
-                        </div>
-                    </div>
-                </div>
-            `;
+        window.loadSpecialDetail = (idx) => {
+            const item = specialData[idx];
+            document.querySelectorAll('.special-list-btn').forEach((b, i) => i === idx ? b.classList.add('active') : b.classList.remove('active'));
+            const ex = item.examples.map(e => `<span class="bg-white px-4 py-2 rounded-lg shadow-sm border border-orange-200 text-orange-700 font-bold text-xs">📄 ${e}</span>`).join('');
+            document.getElementById('specialContent').innerHTML = `
+                <div class="text-7xl font-black text-orange-600 mb-4">${item.pinyin}</div>
+                <div class="px-6 py-2 bg-orange-500 text-white rounded-full font-bold mb-6 text-sm mx-auto w-fit">${item.focus}</div>
+                <div class="bg-white p-6 rounded-2xl border-l-8 border-orange-400 shadow-sm text-left mx-auto max-w-md">
+                    <p class="text-slate-600 italic text-sm mb-4 leading-relaxed">${item.tips}</p>
+                    <div class="flex flex-wrap gap-2 justify-center">${ex}</div>
+                </div>`;
         };
 
         window.showSample = () => {
-            const d = data.topicDetails[currentYear];
-            document.getElementById('modalTitle').innerText = d.title;
-            document.getElementById('modalContent').innerText = d.content;
-            const t = document.getElementById('modalTips');
-            t.innerHTML = "";
-            d.tips.forEach(s => { const li = document.createElement('li'); li.innerText = s; t.appendChild(li); });
+            document.getElementById('modalContent').innerText = data.topicDetails[currentYear];
             document.getElementById('sampleModal').classList.add('active');
         };
-
         window.closeSample = () => document.getElementById('sampleModal').classList.remove('active');
-
-        let timerInterval, timeLeft = 180, isRunning = false;
-        window.toggleTimer = () => {
-            if (isRunning) window.stopTimer();
-            else window.startTimer();
-        };
-
-        window.startTimer = () => {
-            isRunning = true;
-            document.getElementById('timerBtn').innerText = "暫停計時";
-            document.getElementById('timerBtn').className = "bg-red-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-600 transition active:scale-95 shadow-md";
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                window.updateTimerDisplay();
-                if (timeLeft <= 0) { window.stopTimer(); window.showNotification("🔔 時間到！"); }
-            }, 1000);
-        };
-
-        window.stopTimer = () => {
-            isRunning = false;
-            clearInterval(timerInterval);
-            document.getElementById('timerBtn').innerText = "開始計時";
-            document.getElementById('timerBtn').className = "bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition active:scale-95";
-        };
-
-        window.updateTimerDisplay = () => {
-            const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
-            document.getElementById('timer').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-        };
-
         window.showNotification = (msg) => {
             const n = document.getElementById('notification');
             n.innerText = msg; n.classList.add('show', 'opacity-100');
-            setTimeout(() => { n.classList.remove('show', 'opacity-100'); }, 3000);
+            setTimeout(() => n.classList.remove('show', 'opacity-100'), 4000);
         };
 
         document.addEventListener('DOMContentLoaded', () => {
             initSpecialList();
-            console.log("初始化完成");
+            const key = sessionStorage.getItem('gemini_api_key');
+            if(key) window.updateApiBadge(true);
         });
     </script>
 </body>
