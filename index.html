@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>華語口語表達：2024-2025 認證試題暖身</title>
+    <title>華語口語表達：2023-2025 認證試題暖身</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
@@ -11,6 +11,9 @@
             font-family: 'Noto Sans TC', sans-serif;
             background-color: #f0f4f8;
             -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
         .game-card {
             display: none;
@@ -37,8 +40,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 50;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(4px);
@@ -46,10 +49,13 @@
         .modal.active {
             display: flex;
         }
-        /* 自訂通知樣式 */
         #notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
             transform: translateX(-50%) translateY(100px);
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 2000;
         }
         #notification.show {
             transform: translateX(-50%) translateY(0);
@@ -62,34 +68,34 @@
         <!-- 標題與導航 -->
         <header class="text-center mb-8">
             <h1 class="text-3xl font-bold text-slate-800 mb-2">🎤 華語口語認證試題暖身</h1>
-            <p class="text-slate-600">教育部 2024 & 2025 完整口語試題庫</p>
+            <p class="text-slate-600">教育部 2023 - 2025 完整口語試題資源庫</p>
             <nav class="flex flex-wrap justify-center gap-2 mt-6">
-                <button onclick="showGame('pronounce')" class="px-5 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition shadow-md active:scale-95">1. 發音快閃店</button>
-                <button onclick="showGame('emotion')" class="px-5 py-2 bg-purple-500 text-white rounded-full hover:bg-purple-600 transition shadow-md active:scale-95">2. 語氣百變怪</button>
-                <button onclick="showGame('speech')" class="px-5 py-2 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 transition shadow-md active:scale-95">3. 演說急轉彎</button>
+                <button onclick="window.showGame('pronounce')" class="px-5 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition shadow-md active:scale-95">1. 發音快閃店</button>
+                <button onclick="window.showGame('emotion')" class="px-5 py-2 bg-purple-500 text-white rounded-full hover:bg-purple-600 transition shadow-md active:scale-95">2. 語氣百變怪</button>
+                <button onclick="window.showGame('speech')" class="px-5 py-2 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 transition shadow-md active:scale-95">3. 演說急轉彎</button>
             </nav>
         </header>
 
         <!-- 遊戲區 1: 發音快閃店 -->
         <section id="pronounce" class="game-card active bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-blue-500">
             <h2 class="text-2xl font-bold text-blue-600 mb-4">🏠 1. 發音快閃店</h2>
-            <p class="text-slate-500 mb-6">挑戰認證考試中的單音節與雙音節難詞。</p>
-            <div id="wordDisplay" class="random-box bg-blue-50 border-4 border-dashed border-blue-200 rounded-xl mb-8 p-10">
-                <span class="text-5xl font-bold text-blue-300">點擊按鈕開始挑戰</span>
+            <p class="text-slate-500 mb-6">隨機挑戰 2024 與 2025 考題中的難字與詞彙發音。</p>
+            <div id="wordDisplay" class="random-box bg-blue-50 border-4 border-dashed border-blue-200 rounded-xl mb-8 p-10 overflow-hidden">
+                <span class="text-4xl font-bold text-blue-300">點擊按鈕開始挑戰</span>
             </div>
             <div class="flex justify-center gap-4">
-                <button onclick="nextWord('single')" class="bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold hover:bg-blue-200 transition active:scale-95">單音節字挑戰</button>
-                <button onclick="nextWord('double')" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition active:scale-95">雙音節詞挑戰</button>
+                <button onclick="window.nextWord('single')" class="bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold hover:bg-blue-200 transition active:scale-95">單音節字挑戰</button>
+                <button onclick="window.nextWord('double')" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition active:scale-95">雙音節詞挑戰</button>
             </div>
         </section>
 
         <!-- 遊戲區 2: 語氣百變怪 -->
         <section id="emotion" class="game-card bg-white rounded-2xl p-8 shadow-xl text-center border-t-8 border-purple-500">
             <h2 class="text-2xl font-bold text-purple-600 mb-4">👾 2. 語氣百變怪</h2>
-            <p class="text-slate-500 mb-6">隨機抽取句子，根據句意配對適當的語氣練習，告別機械朗讀。</p>
+            <p class="text-slate-500 mb-6">隨機抽取考題句子，配合情境語氣，訓練自然的口語流利度。</p>
             <div class="grid md:grid-cols-2 gap-4 mb-8">
                 <div class="p-6 bg-purple-50 rounded-xl border border-purple-100">
-                    <span class="block text-sm text-purple-400 uppercase tracking-widest mb-2 font-bold">考題句子 (2024/2025)</span>
+                    <span class="block text-sm text-purple-400 uppercase tracking-widest mb-2 font-bold">考題句子</span>
                     <div id="sentenceDisplay" class="text-lg font-medium text-slate-800 leading-relaxed min-h-[120px] flex items-center justify-center italic">請點擊下方按鈕</div>
                 </div>
                 <div class="p-6 bg-orange-50 rounded-xl border border-orange-100 relative">
@@ -98,7 +104,7 @@
                     <p class="text-[10px] text-orange-400 mt-2 leading-tight">註：語氣根據句意邏輯設定，旨在訓練自然的語調起伏與斷句。</p>
                 </div>
             </div>
-            <button onclick="nextEmotion()" class="w-full bg-purple-600 text-white px-8 py-4 rounded-xl font-bold text-xl hover:bg-purple-700 shadow-lg transition transform active:scale-95">
+            <button onclick="window.nextEmotion()" class="w-full bg-purple-600 text-white px-8 py-4 rounded-xl font-bold text-xl hover:bg-purple-700 shadow-lg transition transform active:scale-95">
                 隨機抽取句子
             </button>
         </section>
@@ -122,17 +128,17 @@
             <div class="flex flex-col items-center gap-4">
                 <div class="text-5xl font-mono font-bold text-slate-700" id="timer">03:00</div>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="nextTopic()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 shadow-md transition active:scale-95">抽取新題目</button>
-                    <button id="timerBtn" onclick="toggleTimer()" class="bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition active:scale-95">開始計時</button>
-                    <button id="sampleBtn" onclick="showSample()" class="hidden bg-orange-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 shadow-md transition active:scale-95">查看範文與建議</button>
+                    <button onclick="window.nextTopic()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 shadow-md transition active:scale-95">抽取新題目</button>
+                    <button id="timerBtn" onclick="window.toggleTimer()" class="bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition active:scale-95">開始計時</button>
+                    <button id="sampleBtn" onclick="window.showSample()" class="hidden bg-orange-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 shadow-md transition active:scale-95">查看範文與建議</button>
                 </div>
             </div>
         </section>
 
         <!-- 範文 Modal -->
-        <div id="sampleModal" class="modal p-4" onclick="if(event.target==this) closeSample()">
-            <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-8 relative shadow-2xl">
-                <button onclick="closeSample()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">✕</button>
+        <div id="sampleModal" class="modal p-4" onclick="if(event.target==this) window.closeSample()">
+            <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl">
+                <button onclick="window.closeSample()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">✕</button>
                 <h3 id="modalTitle" class="text-2xl font-bold text-emerald-700 mb-4">範文標題</h3>
                 
                 <div class="mb-6">
@@ -152,18 +158,33 @@
         </div>
 
         <!-- 浮動通知訊息 -->
-        <div id="notification" class="fixed bottom-10 left-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl z-[60] text-center min-w-[200px] pointer-events-none opacity-0">
+        <div id="notification" class="bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl text-center min-w-[200px] pointer-events-none opacity-0">
             訊息內容
         </div>
 
+        <!-- 頁尾與資料來源 -->
         <footer class="mt-12 p-6 bg-slate-800 text-slate-300 rounded-xl text-sm">
-            <h3 class="font-bold text-white mb-2 underline italic">💡 教學資源備註：</h3>
-            <p>本工具整合 2024-2025 華語口語認證試題。建議在練習演說時，先求流利度，再逐步增加語感描述。如有發布問題，請確認檔案名稱為 index.html。</p>
+            <h3 class="font-bold text-white mb-2 underline italic">💡 教學資源備註與來源：</h3>
+            <p class="mb-4 text-slate-400">本暖身工具目前已整合 2024-2025 年份之互動試題內容。您可以透過下方官方連結下載完整的歷屆考古題（PDF）供學生練習使用。</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                <div class="flex items-center space-x-2">
+                    <span>🔗</span>
+                    <a href="https://ws.moe.edu.tw/Download.ashx?u=LzAwMS9VcGxvYWQvNy9yZWxmaWxlLzkxMjEvOTAzOTQvMjBjYjlmMWUtNWM0ZS00ZTVkLTgyNDEtMGY5ZjRkZDM0ODk4LnBkZg%3d%3d&n=MjAyM%2bW5tOaVmeiCsumDqOWwjeWkluiPr%2biqnuaVmeWtuOiDveWKm%2biqjeitieiAg%2bippuippumhjF%2foj6%2foqp7lj6Poqp7oiIfooajpgZQucGRm&icon=..pdf" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline transition">2023年口語表達考古題連結</a>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span>🔗</span>
+                    <a href="https://ws.moe.edu.tw/Download.ashx?u=LzAwMS9VcGxvYWQvNy9yZWxmaWxlLzkxMjEvOTU1NTEvZWZlYTU5OTItZjUyNy00ZDI2LWE4NjktYzk0OTQ2YWZjM2JlLnBkZg%3d%3d&n=MjAyNOW5tOaVmeiCsumDqOWwjeWkluiPr%2biqnuaVmeWtuOiDveWKm%2biqjeitieiAg%2bippl%2foqabpoYxf6I%2bv6Kqe5Y%2bj6Kqe6IiH6KGo6YGULnBkZg%3d%3d&icon=..pdf" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline">2024年口語表達考古題連結</a>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span>🔗</span>
+                    <a href="https://ws.moe.edu.tw/Download.ashx?u=LzAwMS9VcGxvYWQvNy9yZWxmaWxlLzkxMjEvMTAxMjYzL2I4YzVmNTY5LWI0YTAtNGVjYS05ZjA0LWFjMzU3Y2I2M2QyMC5wZGY%3d&n=MjAyNeW5tOaVmeiCsumDqOWwjeWkluiPr%2biqnuaVmeWtuOiDveWKm%2biqjeitieiAg%2bippl%2foqabpoYxf6I%2bv6Kqe5Y%2bj6Kqe6IiH6KGo6YGUX%2bWFrOWRiueJiC5wZGY%3d&icon=..pdf" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline">2025年口語表達考古題連結</a>
+                </div>
+            </div>
         </footer>
     </div>
 
     <script>
-        // 初始化資料庫
+        // 資料庫內容保持不變（使用 2024 & 2025 內容）
         const data = {
             single: ['兒', '疊', '瘦', '彩', '辣', '虐', '扯', '推', '陪', '也', '羞', '惹', '晉', '鷹', '庫', '植', '猴', '燙', '祖', '曼', '捉', '洋', '豐', '果', '遠', '僧', '儒', '左', '棚', '猜', '丹', '諾', '促', '毯', '全', '損', '撐', '灣', '葬', '腿', '祝', '盟', '型', '母', '熬', '抽', '六', '屬', '煩', '炯', '蜂', '人', '乖', '課', '頗'],
             double: ['小別', '根本', '不可', '腦子', '凌晨', '本性', '念頭', '米酒', '簡單', '走啊', '饒命', '成長', '宿舍', '複方', '妹妹', '快點兒', '難得', '架子', '談吐', '腳踝', '警報', '猩猩', '優渥', '參差', '做主', '神速', '一塊兒', '看護', '天啊', '冷暖', '我們', '不去'],
@@ -174,7 +195,7 @@
                 { text: "俗語說得好：「船到橋頭自然直」，你放輕鬆點兒！", moods: ["🍃 溫馨安慰", "🥰 充滿希望", "✊ 鼓勵打氣"] },
                 { text: "消防隊員奮不顧身地衝進火場裡救人，令人敬佩。", moods: ["🫡 充滿敬意", "✊ 嚴肅讚揚", "😮‍💨 深深感動"] },
                 { text: "哥哥聚精會神地準備明天的測驗，你還是別去吵他了吧！", moods: ["🤫 輕聲提醒", "🫡 認真嚴肅", "🍃 委婉勸告"] },
-                { text: "這樣的說法，你能說不對嗎？能夠拿出證據來反駁嗎？", moods: ["✊ 堅定反駁", "🧐 嚴肅質疑", "😤 強力詰問"] },
+                { text: "這樣的說法，你能說不對嗎？能夠拿出證據來反駁嗎？", moods: ["✊ 堅定反駁", "🧐 嚴肅質質疑", "😤 強力詰問"] },
                 { text: "我深刻體悟到「萬兩黃金容易得，知音一個也難求。」", moods: ["🧘 哲理感悟", "😮‍💨 些許感嘆", "🥰 溫暖感念"] },
                 { text: "這道菜在色、香、味哪個方面比較突出呢？", moods: ["🧐 認真詢問", "🍃 輕鬆閒聊", "🤩 興致勃勃"] },
                 { text: "他做人腳踏實地，深信著「一分耕耘，一分收穫」。", moods: ["🫡 佩服稱讚", "✊ 堅定認同", "🧘 深沉體會"] },
@@ -192,7 +213,7 @@
             topicDetails: {
                 "2024": {
                     title: "我最喜歡的一部劇",
-                    content: `今天我要分享的主題是「我最喜歡的一部劇」。<br><br>在眾多戲劇作品中，讓我印象最深刻、且反覆觀看的，是韓劇《請回答1988》。這部劇不同於常見的偶像劇，它沒有跌宕起伏的狗血劇情，而是以1988年漢城奧運為背景，細膩刻劃了住在「雙門洞」五個家庭之間的情誼。<br><br>我之所以喜歡這部劇，是因為它展現了「平凡中的偉大」。劇中描述了鄰里間分享飯菜的溫馨，也呈現了父母對子女那份笨拙卻深沉的愛。例如劇中有一幕，爸爸對女兒說：「爸爸也是第一次當爸爸。」這句話讓我深受感動，讓我意識到家人之間的理解需要時間。此外，劇中五位青梅竹馬的友情，更是讓人嚮往。那種推開門就能找到玩伴、大喊一聲就能得到回應的親密感，在現代冷漠的城市生活中顯得格外珍貴。<br><br>這部劇不僅讓我感受到溫暖，更教會我珍惜當下與親友相處的時光。即使時光流逝，那份純粹的情感依然能引起共鳴。這就是我最喜歡這部劇的原因，推薦給大家。謝謝。`,
+                    content: `今天我要分享的主題是「我最喜歡的一部劇」。<br><br>在眾多戲劇作品中，讓我印象最深刻、且反覆觀看的，是韓劇《請回答1988》。這部劇不同於常見的偶像劇，它沒有跌宕起伏的狗血劇情，而是以1988年漢城奧運為背景，細膩刻劃了住在「雙門洞」五個家庭之間的情誼。<br><br>我之所以喜歡這部劇，是因為它展現了「平凡中的偉大」。劇中描述了鄰里間分享飯菜的溫馨，也呈現了父母對子女那份笨拙卻深沉的愛。例如劇中有一幕，爸爸對女兒說：「爸爸也是第一次當爸爸。」這句話讓我深受感動，讓我意識到家人之間的理解需要時間。此外，劇中五位青梅竹馬的友情，更是讓人嚮往。那種推開門就能找到玩伴、大喊一聲就能得到回應的親密感，在現代冷漠的城市生活中顯得格外珍貴。<br><br>這部劇不僅讓我感受到溫暖，更教會我珍惜當下與親友相處的時光。即使時光流逝，那份純粹的情感依然能引起共鳴。謝謝。`,
                     tips: ["結構分明：採用五段式結構。", "情感共鳴：分享具體金句增加感染力。", "減少冗詞：注意減少「然後」、「那個」。", "語速控制：描述感人場景時放慢節奏。"]
                 },
                 "2025": {
@@ -208,12 +229,11 @@
         let timeLeft = 180;
         let isRunning = false;
 
-        // 全域函數定義
         window.showGame = function(gameId) {
             document.querySelectorAll('.game-card').forEach(card => card.classList.remove('active'));
-            const activeCard = document.getElementById(gameId);
-            if(activeCard) activeCard.classList.add('active');
-            stopTimer();
+            const target = document.getElementById(gameId);
+            if(target) target.classList.add('active');
+            window.stopTimer();
         };
 
         window.nextWord = function(type) {
@@ -221,10 +241,10 @@
             if(!list) return;
             const word = list[Math.floor(Math.random() * list.length)];
             const display = document.getElementById('wordDisplay');
-            const fontSize = type === 'double' ? 'text-7xl' : 'text-9xl';
-            display.innerHTML = `<span class="${fontSize} font-black text-blue-800 tracking-wider">${word}</span>`;
-            display.classList.add('scale-110');
-            setTimeout(() => display.classList.remove('scale-110'), 150);
+            const fontSize = type === 'double' ? 'text-6xl md:text-7xl' : 'text-8xl md:text-9xl';
+            display.innerHTML = `<span class="${fontSize} font-black text-blue-800 tracking-wider transition-all">${word}</span>`;
+            display.style.transform = "scale(1.05)";
+            setTimeout(() => display.style.transform = "scale(1)", 150);
         };
 
         window.nextEmotion = function() {
@@ -235,19 +255,15 @@
         };
 
         window.nextTopic = function() {
-            const is2024 = Math.random() > 0.5;
-            currentYear = is2024 ? "2024" : "2025";
-            const topicStr = is2024 ? "題目：我最喜歡的一部劇 (2024年試題)" : "題目：難忘的旅行 (2025年試題)";
-            
+            currentYear = Math.random() > 0.5 ? "2024" : "2025";
+            const topicStr = currentYear === "2024" ? "題目：我最喜歡的一部劇 (2024年試題)" : "題目：難忘的旅行 (2025年試題)";
             document.getElementById('currentTopic').innerText = topicStr;
             document.getElementById('scaffolding').classList.remove('hidden');
             document.getElementById('sampleBtn').classList.remove('hidden');
-            
             timeLeft = 180;
-            updateTimerDisplay();
-            stopTimer();
+            window.updateTimerDisplay();
+            window.stopTimer();
             document.getElementById('timerBtn').innerText = "開始計時";
-            document.getElementById('timerBtn').className = "bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition active:scale-95";
         };
 
         window.showSample = function() {
@@ -255,7 +271,6 @@
             const details = data.topicDetails[currentYear];
             document.getElementById('modalTitle').innerText = details.title;
             document.getElementById('modalContent').innerHTML = details.content;
-            
             const tipsContainer = document.getElementById('modalTips');
             tipsContainer.innerHTML = "";
             details.tips.forEach(tip => {
@@ -263,7 +278,6 @@
                 li.innerText = tip;
                 tipsContainer.appendChild(li);
             });
-            
             document.getElementById('sampleModal').classList.add('active');
         };
 
@@ -273,42 +287,42 @@
 
         window.toggleTimer = function() {
             if (isRunning) {
-                stopTimer();
+                window.stopTimer();
                 document.getElementById('timerBtn').innerText = "繼續計時";
             } else {
-                startTimer();
+                window.startTimer();
                 document.getElementById('timerBtn').innerText = "暫停計時";
             }
         };
 
-        function startTimer() {
+        window.startTimer = function() {
             if(isRunning) return;
             isRunning = true;
             document.getElementById('timerBtn').className = "bg-red-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-600 transition shadow-lg active:scale-95";
             timerInterval = setInterval(() => {
                 timeLeft--;
-                updateTimerDisplay();
+                window.updateTimerDisplay();
                 if (timeLeft <= 0) {
-                    stopTimer();
-                    showNotification("🔔 練習時間到！");
+                    window.stopTimer();
+                    window.showNotification("🔔 練習時間結束！");
                 }
             }, 1000);
-        }
+        };
 
-        function stopTimer() {
+        window.stopTimer = function() {
             isRunning = false;
             clearInterval(timerInterval);
             document.getElementById('timerBtn').className = "bg-slate-200 text-slate-700 px-6 py-3 rounded-lg font-bold hover:bg-slate-300 transition active:scale-95";
-        }
+        };
 
-        function updateTimerDisplay() {
+        window.updateTimerDisplay = function() {
             const mins = Math.floor(timeLeft / 60);
             const secs = timeLeft % 60;
             document.getElementById('timer').innerText = 
                 `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
+        };
 
-        function showNotification(msg) {
+        window.showNotification = function(msg) {
             const notify = document.getElementById('notification');
             notify.innerText = msg;
             notify.classList.add('show');
@@ -317,11 +331,10 @@
                 notify.classList.remove('show');
                 notify.style.opacity = "0";
             }, 3000);
-        }
+        };
 
-        // 確保 DOM 載入後執行初始化
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("華語口語暖身工具已啟動");
+            console.log("華語口語暖身工具啟動成功");
         });
     </script>
 </body>
