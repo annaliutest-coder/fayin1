@@ -324,6 +324,7 @@
 
         const data = {
             single: ['兒', '疊', '瘦', '彩', '辣', '虐', '撇', '揣', '挪', '瞅', '惹', '儒', '晉', '鷹', '庫', '植', '猴', '燙', '祖', '曼', '捉', '洋', '豐', '果', '遠', '僧', '儒'],
+            double: ['徘徊', '璀璨', '琉璃', '葡萄', '躊躇', '忐忑', '瑪瑙', '尷尬', '蜘蛛', '蝙蝠', '駱駝', '玫瑰', '澎湃', '彷彿', '崎嶇', '朦朧', '慷慨', '猶豫', '燦爛', '清澈', '活潑', '溫柔', '浪漫', '幽默', '智慧', '希望', '未來', '快樂', '幸福'],
             topics: [{ id: "2024", text: "題目：我最喜歡的一部劇 (2024)" },{ id: "2025", text: "題目：難忘的旅行 (2025)" },{ id: "2023", text: "題目：我最敬佩的一個人 (2023)" }],
             topicDetails: { "2024": "今天我要分享的是《請回答1988》。這部劇細膩刻劃了五個家庭之間的情誼......教會我珍惜與親友相處的時光。", "2025": "兩年前我獨自前往台灣東部的花蓮之旅，聽著浪花拍打鵝卵石的聲響......", "2023": "我最敬佩的是我的中學老師。他不僅是知識的傳遞者，更是心靈的引路人......" },
             sentences: [
@@ -432,9 +433,17 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        window.nextWord = () => {
-            if (pools.single.length === 0) pools.single = [...data.single].sort(() => Math.random() - 0.5);
-            const word = pools.single.pop();
+        window.nextWord = (type) => {
+            let pool = pools[type];
+            let sourceData = data[type];
+            
+            // 當題庫空了，就重新從資料庫打亂後填補
+            if (!pool || pool.length === 0) {
+                pools[type] = [...sourceData].sort(() => Math.random() - 0.5);
+                pool = pools[type];
+            }
+            
+            const word = pool.pop();
             document.getElementById('currentWordSpan').innerText = word;
             document.getElementById('currentWordSpan').className = "text-8xl font-black text-blue-800 text-center";
         };
@@ -492,6 +501,45 @@
             n.innerText = msg; n.classList.add('show', 'opacity-100');
             setTimeout(() => n.classList.remove('show', 'opacity-100'), 4000);
         };
+
+        // 計時器功能
+        let timerInterval;
+        let isTimerRunning = false;
+        let timeLeft = 180; // 3分鐘 = 180秒
+
+        window.toggleTimer = () => {
+            const btn = document.getElementById('timerBtn');
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                btn.innerText = "繼續計時";
+                btn.classList.replace('bg-red-100', 'bg-slate-200');
+                btn.classList.replace('text-red-700', 'text-slate-700');
+            } else {
+                if(timeLeft <= 0) timeLeft = 180; // 重置
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    updateTimerDisplay();
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        isTimerRunning = false;
+                        btn.innerText = "重新開始";
+                        btn.classList.replace('bg-red-100', 'bg-slate-200');
+                        btn.classList.replace('text-red-700', 'text-slate-700');
+                        window.showNotification("⏰ 時間到！");
+                    }
+                }, 1000);
+                btn.innerText = "暫停計時";
+                btn.classList.replace('bg-slate-200', 'bg-red-100');
+                btn.classList.replace('text-slate-700', 'text-red-700');
+            }
+            isTimerRunning = !isTimerRunning;
+        };
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const s = (timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             initSpecialList();
